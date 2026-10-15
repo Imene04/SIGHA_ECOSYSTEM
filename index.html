@@ -1,192 +1,363 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SIGHA Ecosystem Prototype</title>
+<title>SIGHA Ecosystem — Démo</title>
 <style>
-:root{--b:#125B89;--bd:#0c3f61;--bl:#e6f0f7;--g:#C79720;--gl:#fbf3de;--bg:#f2f6fa;--t:#1d2b3a;--m:#6b7c8d;--ok:#1f9d6b;--okl:#e3f5ee;--wa:#d98200;--wal:#fff1d6;--er:#d64545;--erl:#fde8e8;--ln:#dbe4ec}
+:root{--pc:#125B89;--b:#125B89;--bd:#0c3f61;--bl:#e6f0f7;--g:#C79720;--gl:#fbf3de;--bg:#f2f6fa;--t:#1d2b3a;--m:#6b7c8d;--ok:#1f9d6b;--okl:#e3f5ee;--wa:#d98200;--wal:#fff1d6;--er:#d64545;--erl:#fde8e8;--ln:#dbe4ec}
 *{box-sizing:border-box}
-body{margin:0;font-family:Calibri,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--t);font-size:14px}
-.app{display:grid;grid-template-columns:210px 1fr;height:100vh;min-height:640px}
-.side{background:var(--bd);color:#fff;display:flex;flex-direction:column;padding:16px 12px}
-.logo{font-family:"Times New Roman",serif;font-size:22px;color:var(--g);letter-spacing:1px;font-weight:bold;padding:0 6px}
+html,body{margin:0;height:100%}
+body{font-family:Calibri,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--t);font-size:14px}
+.demo{background:var(--g);color:#fff;font-size:12px;text-align:center;padding:4px 10px;font-weight:bold;letter-spacing:.3px}
+.app{display:grid;grid-template-columns:230px 1fr;height:calc(100vh - 26px);min-height:600px}
+.side{background:var(--bd);color:#fff;display:flex;flex-direction:column;padding:14px 10px;overflow:auto}
+.logo{font-family:"Times New Roman",serif;font-size:22px;color:var(--g);letter-spacing:1px;font-weight:bold;padding:0 8px}
 .logo small{display:block;font:11px Calibri,sans-serif;color:#b9cfe0;letter-spacing:.5px;margin-top:2px}
-.nav{margin-top:22px;display:flex;flex-direction:column;gap:6px}
-.nav button{display:flex;align-items:center;gap:10px;background:transparent;border:0;color:#d5e4f0;padding:9px 8px;border-radius:8px;cursor:pointer;font-size:14px;text-align:left;font-family:inherit}
+.sl{font-size:10px;letter-spacing:1px;color:#7fa3be;margin:16px 8px 6px;text-transform:uppercase}
+.nav{display:flex;flex-direction:column;gap:3px}
+.nav button{display:flex;align-items:center;gap:10px;background:transparent;border:0;color:#d5e4f0;padding:8px;border-radius:8px;cursor:pointer;font-size:13.5px;text-align:left;font-family:inherit}
 .nav button:hover{background:rgba(255,255,255,.08)}
-.nav button.on{background:var(--b);color:#fff;box-shadow:inset 3px 0 0 var(--g)}
-.ic{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-weight:bold;font-size:13px;color:#fff;flex:none}
-.bdg{margin-left:auto;background:var(--g);color:#fff;border-radius:10px;font-size:11px;padding:1px 7px;font-weight:bold}
-.sfoot{margin-top:auto;font-size:11px;color:#8fb0c9;padding:6px}
+.nav button.on{background:rgba(255,255,255,.14);color:#fff}
+.nav.plat button.on{background:var(--pc);box-shadow:inset 3px 0 0 var(--g)}
+.nav.sec button.on{box-shadow:inset 3px 0 0 var(--g)}
+.ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-weight:bold;font-size:12px;color:#fff;flex:none}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.bdg{margin-left:auto;background:var(--g);color:#fff;border-radius:10px;font-size:11px;padding:0 7px;font-weight:bold}
+.sfoot{margin-top:auto;font-size:11px;color:#8fb0c9;padding:10px 8px 0}
+.sfoot button{background:none;border:1px solid #4f7a99;color:#cfe0ee;border-radius:6px;padding:4px 8px;cursor:pointer;font-size:11px;margin-top:6px}
 .main{display:flex;flex-direction:column;min-width:0;overflow:hidden}
-.top{background:#fff;border-bottom:1px solid var(--ln);padding:10px 20px;display:flex;align-items:center;gap:14px}
-.top h1{margin:0;font-size:18px;color:var(--bd)}
+.top{background:#fff;border-bottom:3px solid var(--pc);padding:10px 22px;display:flex;align-items:center;gap:14px}
+.top h1{margin:0;font-size:19px;color:var(--pc)}
 .top .org{color:var(--m);font-size:12px}
-.user{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px}
-.av{width:30px;height:30px;border-radius:50%;background:var(--b);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:bold}
-.steps{display:flex;gap:6px;padding:8px 20px;background:#fff;border-bottom:1px solid var(--ln);overflow:hidden}
-.st{flex:1;font-size:11px;padding:5px 8px;border-radius:6px;background:var(--bg);color:var(--m);cursor:pointer;border:1px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.st.done{background:var(--okl);color:var(--ok)}
-.st.cur{background:var(--gl);color:#8a6410;border-color:var(--g);font-weight:bold}
-.content{padding:16px 20px;overflow:auto;flex:1}
-.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid var(--ln)}
-.tab{padding:7px 14px;border:0;background:none;cursor:pointer;color:var(--m);font-size:13px;border-bottom:3px solid transparent;font-family:inherit}
-.tab.on{color:var(--b);border-bottom-color:var(--g);font-weight:bold}
-.grid{display:grid;gap:14px}
-.g3{grid-template-columns:260px 1fr 1fr}.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.4fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+.user{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:13px}
+.bell{position:relative;background:var(--bg);border:0;border-radius:50%;width:34px;height:34px;cursor:pointer;color:var(--bd);display:grid;place-items:center}
+.bell b{position:absolute;top:-3px;right:-3px;background:var(--er);color:#fff;border-radius:9px;font-size:10px;padding:0 5px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--pc);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:bold}
+.content{padding:16px 22px;overflow:auto;flex:1}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:12px}.ph h2{margin:0;font-size:17px;color:var(--bd)}.ph .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.5fr 1fr}.g12{grid-template-columns:1fr 1.5fr}.g4{grid-template-columns:repeat(4,1fr)}.g31{grid-template-columns:320px 1fr}
 .card{background:#fff;border:1px solid var(--ln);border-radius:10px;padding:12px 14px}
-.card h3{margin:0 0 8px;font-size:13px;color:var(--bd);text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
-.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:bold;text-transform:none;letter-spacing:0}
-.c-dr{background:var(--bg);color:var(--m)}.c-se{background:var(--wal);color:var(--wa)}.c-ok{background:var(--okl);color:var(--ok)}.c-er{background:var(--erl);color:var(--er)}.c-bl{background:var(--bl);color:var(--b)}
-.btn{background:var(--b);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:bold;font-size:13px;font-family:inherit}
-.btn:hover{background:var(--bd)}.btn.gold{background:var(--g)}.btn.gold:hover{background:#a87c15}
-.btn.ghost{background:#fff;color:var(--b);border:1px solid var(--b)}
-.btn:disabled{background:#c5d0da;cursor:not-allowed}
-.row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--ln);gap:8px}
-.row:last-child{border:0}
-.lbl{color:var(--m);font-size:12px}
+.card+.card{margin-top:14px}.grid>.card+.card,.grid .card+.card{margin-top:0}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card h3{margin:0 0 8px;font-size:12px;color:var(--bd);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:bold;white-space:nowrap}
+.c-dr{background:#eef2f6;color:var(--m)}.c-se{background:var(--wal);color:var(--wa)}.c-ok{background:var(--okl);color:var(--ok)}.c-er{background:var(--erl);color:var(--er)}.c-bl{background:var(--bl);color:var(--b)}.c-ai{background:#efe6fb;color:#5b3a9a}
+.btn{background:var(--pc);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:bold;font-size:13px;font-family:inherit;white-space:nowrap}
+.btn:hover{filter:brightness(.9)}.btn.gold{background:var(--g)}.btn.ghost{background:#fff;color:var(--pc);border:1px solid var(--pc)}.btn.red{background:var(--er)}.btn.sm{padding:4px 10px;font-size:12px}
+.btn:disabled{background:#c5d0da;cursor:not-allowed;filter:none}
+.row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dashed var(--ln);gap:10px}.row:last-child{border:0}
+.lbl{color:var(--m);font-size:12px}.small{font-size:12px;color:var(--m)}.mt{margin-top:12px}.right{text-align:right}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;color:var(--m);font-size:11px;text-transform:uppercase;padding:5px 6px;border-bottom:1px solid var(--ln)}
-td{padding:6px;border-bottom:1px solid #eef2f6}
+th{text-align:left;color:var(--m);font-size:11px;text-transform:uppercase;padding:6px;border-bottom:1px solid var(--ln);letter-spacing:.3px}
+td{padding:7px 6px;border-bottom:1px solid #eef2f6;vertical-align:middle}
+tr.clk{cursor:pointer}tr.clk:hover td{background:#f7fafc}
 .H{color:var(--er);font-weight:bold}.N{color:var(--ok)}
-input[type=text]{border:1px solid var(--ln);border-radius:6px;padding:4px 6px;width:70px;font-family:inherit}
-textarea{width:100%;border:1px solid var(--ln);border-radius:8px;padding:8px;font-family:inherit;font-size:13px;min-height:130px}
-.kpi{text-align:left}.kpi b{font-size:26px;color:var(--b);display:block}.kpi span{font-size:12px;color:var(--m)}
-.bar{height:9px;background:#e6edf3;border-radius:5px;overflow:hidden;flex:1}.bar i{display:block;height:100%;background:var(--b)}.bar i.w{background:var(--wa)}.bar i.e{background:var(--er)}
-.imgs{display:flex;gap:8px}
-.im{width:110px;height:84px;border-radius:6px;position:relative;overflow:hidden;border:1px solid #333}
-.im em{position:absolute;left:4px;bottom:3px;color:#cfd8e0;font-size:9px;font-style:normal}
+.kpi{border-left:4px solid var(--pc)}.kpi b{font-size:28px;color:var(--pc);display:block;line-height:1.1}.kpi span{font-size:12px;color:var(--m)}
+.bar{height:9px;background:#e6edf3;border-radius:5px;overflow:hidden;flex:1}.bar i{display:block;height:100%;background:#2f7fb0}.bar i.w{background:var(--wa)}.bar i.e{background:var(--er)}
+.bars{display:flex;align-items:flex-end;gap:8px;height:110px;padding-top:6px}.bars div{flex:1;text-align:center;font-size:11px;color:var(--m)}.bars i{display:block;background:var(--pc);border-radius:4px 4px 0 0;opacity:.85;margin-bottom:4px}.bars div.td i{background:var(--g);opacity:1}.bars b{display:block;color:var(--t);font-size:12px}
+.feed .it{display:flex;gap:8px;padding:6px 0;border-bottom:1px dashed var(--ln);font-size:13px}.feed .it:last-child{border:0}.feed .d{width:8px;height:8px;border-radius:50%;background:var(--pc);margin-top:5px;flex:none}.feed small{color:var(--m);display:block;font-size:11px}
+.tl .it{display:flex;gap:10px;align-items:center;padding:7px 8px;border-radius:8px;cursor:pointer}.tl .it:hover{background:#f4f8fb}.tl .tm{width:46px;font-weight:bold;color:var(--pc)}
+/* calendar */
+.cb{display:flex;align-items:center;gap:8px;margin-bottom:10px}.cb h2{margin:0 8px;font-size:16px;color:var(--bd);min-width:200px}
+.seg{display:inline-flex;border:1px solid var(--pc);border-radius:8px;overflow:hidden}.seg button{border:0;background:#fff;color:var(--pc);padding:6px 12px;cursor:pointer;font-family:inherit;font-weight:bold;font-size:12px}.seg button.on{background:var(--pc);color:#fff}
+.wk{background:#fff;border:1px solid var(--ln);border-radius:10px;overflow:hidden}
+.wkh,.wkb{display:grid;grid-template-columns:50px repeat(7,1fr)}
+.wkh div{padding:6px 4px;text-align:center;font-size:12px;color:var(--m);border-left:1px solid var(--ln);background:#f8fafc}.wkh div b{display:block;font-size:16px;color:var(--t)}.wkh .tdy b{color:#fff;background:var(--pc);border-radius:50%;width:28px;height:28px;line-height:28px;margin:2px auto 0}
+.hrs div{height:68px;font-size:10px;color:var(--m);text-align:right;padding:0 6px;transform:translateY(-6px)}
+.dc{position:relative;border-left:1px solid var(--ln);cursor:pointer;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,#eef2f6 33px,#eef2f6 34px)}
+.dc.we{background-color:#fafbfc}.dc.tdy{background-color:#f4f9fd}
+.ap{position:absolute;left:2px;right:2px;border-radius:6px;padding:2px 5px;font-size:11px;overflow:hidden;border-left:4px solid;cursor:pointer;line-height:1.25}
+.ap b{display:block;font-size:11.5px}.ap.ok{background:var(--bl);border-color:var(--pc);color:var(--bd)}.ap.se{background:var(--wal);border-color:var(--wa);color:#7a4b00}.ap.dn{background:var(--okl);border-color:var(--ok);color:#10674a}.ap.er{background:var(--erl);border-color:var(--er);color:#8a2222;text-decoration:line-through}
+.mo{display:grid;grid-template-columns:repeat(7,1fr);background:#fff;border:1px solid var(--ln);border-radius:10px;overflow:hidden}
+.mo .h{padding:6px;text-align:center;font-size:11px;color:var(--m);background:#f8fafc;border-bottom:1px solid var(--ln)}
+.mo .c{min-height:84px;border-left:1px solid #eef2f6;border-bottom:1px solid #eef2f6;padding:4px;cursor:pointer;font-size:11px}.mo .c:hover{background:#f7fafc}.mo .c.o{background:#fafbfc;color:#aab6c2}.mo .c.tdy{background:#f4f9fd}.mo .c .n{font-weight:bold;font-size:12px}.mo .c.tdy .n{color:var(--pc)}
+.mo .e{background:var(--bl);border-left:3px solid var(--pc);border-radius:3px;padding:0 3px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--bd)}
+/* forms and modal */
+.ov{position:fixed;inset:0;background:rgba(10,30,50,.45);display:grid;place-items:center;z-index:50;padding:16px}
+.md{background:#fff;border-radius:12px;width:520px;max-width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.3)}.md.wide{width:720px}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--ln);color:var(--bd);font-size:15px}.mh .x{border:0;background:none;font-size:22px;cursor:pointer;color:var(--m)}
+.mb{padding:14px 16px;overflow:auto}.mf{padding:10px 16px;border-top:1px solid var(--ln);display:flex;gap:8px;justify-content:flex-end}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fg .full{grid-column:1/-1}
+label.f{display:block}label.f span{display:block;font-size:11px;color:var(--m);margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px}
+input,select,textarea{width:100%;border:1px solid var(--ln);border-radius:7px;padding:7px 9px;font-family:inherit;font-size:13px;background:#fff;color:var(--t)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--bl);border-color:var(--pc)}
+textarea{min-height:80px;resize:vertical}
+input.num{width:90px}
+.chk{display:flex;gap:6px;align-items:center;padding:4px 0;font-size:13px}.chk input{width:auto}
+.search{max-width:300px}
+.pl{display:flex;flex-direction:column;gap:6px;max-height:520px;overflow:auto;margin-top:8px}
+.pi{border:1px solid var(--ln);border-radius:8px;padding:8px 10px;display:flex;gap:10px;align-items:center;cursor:pointer;background:#fff}.pi.on{border-color:var(--g);background:var(--gl)}.pi .av{width:30px;height:30px;font-size:11px}
+.imgs{display:flex;gap:8px;flex-wrap:wrap}.im{width:110px;height:84px;border-radius:6px;position:relative;overflow:hidden;border:1px solid #333}.im em{position:absolute;left:4px;bottom:3px;color:#cfd8e0;font-size:9px;font-style:normal}
 .xr{background:radial-gradient(ellipse 20% 36% at 33% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 20% 36% at 67% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 10% 14% at 70% 64%,rgba(235,240,245,.85),transparent),radial-gradient(ellipse 5% 62% at 50% 48%,#cfd4da,transparent),radial-gradient(ellipse 45% 14% at 50% 12%,#aeb4bb,transparent),#101419}
-.xr.b{background:radial-gradient(ellipse 20% 36% at 33% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 20% 36% at 67% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 10% 14% at 69% 66%,rgba(235,240,245,.9),transparent),radial-gradient(ellipse 5% 62% at 50% 48%,#cfd4da,transparent),#101419;filter:contrast(1.15)}
+.xr.n{background:radial-gradient(ellipse 20% 36% at 33% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 20% 36% at 67% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 5% 62% at 50% 48%,#cfd4da,transparent),#101419}
 .us{background:conic-gradient(from 150deg at 50% 0%,#0a0d10 0deg,#59626b 30deg,#232a30 60deg,#6c767f 90deg,#1c2227 120deg,#0a0d10 60deg),#0a0d10}
-.ai{background:linear-gradient(135deg,#f3ecfb,#e6f0f7);border:1px solid #c9b8e8}
-.ai h3{color:#5b3a9a}
-.ptab{border:1px solid var(--ln);border-radius:8px;padding:8px 10px;margin-bottom:8px;display:flex;gap:10px;align-items:center;cursor:pointer;background:#fff}
-.ptab.on{border-color:var(--g);background:var(--gl)}
-.toast{position:fixed;right:18px;bottom:18px;background:var(--bd);color:#fff;padding:10px 16px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:13px;opacity:0;transition:.3s;pointer-events:none}
-.toast.show{opacity:1}
-.small{font-size:12px;color:var(--m)}
-.mt{margin-top:12px}
+.ai{background:linear-gradient(135deg,#f3ecfb,#e6f0f7);border:1px solid #c9b8e8}.ai h3{color:#5b3a9a}
+.beds{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}.beds i{width:16px;height:16px;border-radius:4px;background:#d4dde5}.beds i.o{background:var(--pc)}.beds i.f{background:#c2ecd9}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{border:1px solid var(--ln);background:#fff;border-radius:16px;padding:4px 12px;cursor:pointer;font-size:12px;font-family:inherit;color:var(--m)}.tabs button.on{background:var(--pc);color:#fff;border-color:var(--pc)}
+.toast{position:fixed;right:18px;bottom:18px;background:var(--bd);color:#fff;padding:10px 16px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}.toast.show{opacity:1}
+.warn{background:var(--wal);border:1px solid #f0c36b;color:#7a4b00;border-radius:8px;padding:8px 10px;font-size:12.5px;margin-bottom:10px}
 </style></head><body>
-<div class="app">
+<div class="demo">MAQUETTE DE DÉMONSTRATION · DONNÉES FICTIVES · Interface illustrative, pas une plateforme complète</div>
+<div class="app" id="app">
  <aside class="side">
   <div class="logo">SIGHA<small>Ecosystem · Démo interactive</small></div>
-  <div class="nav" id="nav"></div>
-  <div class="sfoot">Données fictives.<br>Maquette de démonstration.</div>
+  <div class="sl">Plateformes</div><div class="nav plat" id="plat"></div>
+  <div class="sl" id="secl"></div><div class="nav sec" id="sec"></div>
+  <div class="sfoot">Les plateformes sont reliées : une demande du médecin apparaît chez le labo.<br><button onclick="guide()">Parcours conseillé</button> <button onclick="resetDemo()">Réinitialiser</button></div>
  </aside>
  <section class="main">
-  <div class="top"><div><h1 id="ttl"></h1><div class="org" id="org"></div></div><div class="user"><div class="av" id="uav"></div><div id="unm"></div></div></div>
-  <div class="steps" id="steps"></div>
+  <div class="top"><div><h1 id="ttl"></h1><div class="org" id="org"></div></div><div class="user"><button class="bell" id="bell" onclick="notifs()"></button><div class="av" id="uav"></div><div id="unm"></div></div></div>
   <div class="content" id="content"></div>
  </section>
 </div>
 <div class="toast" id="toast"></div>
 <script>
+/* ---------- utils ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const fmt=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const parse=s=>{const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)};
+const today=new Date();today.setHours(0,0,0,0);
+const DJ=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'],MO=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+const wkStart=d=>addDays(d,-d.getDay());
+const mins=t=>{const[h,m]=t.split(':').map(Number);return h*60+m};
+const hhmm=m=>pad(Math.floor(m/60))+':'+pad(m%60);
+const byTime=(a,b)=>(a.date+a.time).localeCompare(b.date+b.time);
+const dlong=s=>{const d=parse(s);return DJ[d.getDay()]+' '+d.getDate()+' '+MO[d.getMonth()].slice(0,4)+'.'};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300)}
+const chip=(t,c)=>`<span class="chip c-${c}">${esc(t)}</span>`;
+const SC={'Confirmé':'bl','En attente':'se','Terminé':'ok','Annulé':'er','Brouillon':'dr','Reçue':'se','En cours':'bl','Terminée':'ok','Prête':'ok','Délivrée':'dr','À trier':'se','Admis':'ok','Orienté ailleurs':'er','Urgente':'er','Normale':'dr'};
+const st=s=>chip(s,SC[s]||'dr');
+const age=n=>{const b=parse(n);let a=today.getFullYear()-b.getFullYear();if(today<new Date(today.getFullYear(),b.getMonth(),b.getDate()))a--;return a};
+const ICON={home:'<path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>',flask:'<path d="M9 3h6M10 3v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 9V3"/>',file:'<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',bed:'<path d="M2 19V6M2 14h20v5M22 14v-2a3 3 0 0 0-3-3h-8v5"/><circle cx="6.5" cy="11" r="1.5"/>',inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/>',send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24">${ICON[n]}</svg>`;
+
+/* ---------- catalogues ---------- */
+const LABCAT={'Glycémie à jeun':{u:'g/L',lo:.7,hi:1.1,m:.9},'HbA1c':{u:'%',lo:4,hi:6.5,m:5.4},'CRP':{u:'mg/L',lo:0,hi:5,m:2},'Globules blancs':{u:'10³/µL',lo:4,hi:10,m:7},'Hémoglobine':{u:'g/dL',lo:13,hi:17,m:14.5},'Cholestérol total':{u:'g/L',lo:1.2,hi:2,m:1.7},'LDL':{u:'g/L',lo:.5,hi:1.3,m:1},'TSH':{u:'mUI/L',lo:.4,hi:4,m:2},'Créatinine':{u:'mg/L',lo:7,hi:13,m:10},'ALAT':{u:'UI/L',lo:7,hi:40,m:25}};
+const KARIM={'Glycémie à jeun':1.86,'HbA1c':8.1,'CRP':48,'Globules blancs':13.4,'Hémoglobine':13.2};
+const IMGCAT={'Radiographie thorax':{k:'xr',t:'Radiographie thoracique de face : poumons bien expansés, sans foyer de condensation. Cul-de-sac costo-diaphragmatiques libres. Silhouette cardiaque normale.\nConclusion : examen normal.'},'Échographie abdominale':{k:'us',t:'Foie de taille et d’échostructure normales. Vésicule biliaire alithiasique. Reins sans dilatation. Pas d’épanchement intra-abdominal.\nConclusion : échographie abdominale normale.'},'Échographie obstétricale':{k:'us',t:'Grossesse unique évolutive, activité cardiaque présente. Biométrie conforme au terme.\nConclusion : développement fœtal normal.'},'Scanner thoracique':{k:'xr',t:'Acquisition sans et avec injection. Pas de nodule suspect. Pas d’adénopathie médiastinale.\nConclusion : scanner thoracique sans anomalie.'},'IRM cérébrale':{k:'xr',t:'Parenchyme cérébral de signal normal. Pas de lésion ischémique ni expansive. Système ventriculaire normal.\nConclusion : IRM cérébrale normale.'},'Mammographie':{k:'xr',t:'Seins de densité hétérogène. Pas de masse ni de microcalcification suspecte. ACR 2.\nConclusion : mammographie sans anomalie suspecte.'}};
+const KARIM_RX="Radiographie thoracique de face : foyer de condensation alvéolaire du lobe inférieur droit avec bronchogramme aérien. Pas d'épanchement pleural. Silhouette cardiaque de taille normale.\nConclusion : aspect compatible avec une pneumopathie franche lobaire inférieure droite.";
+const DRUGS=['Amoxicilline/Ac. clavulanique 1 g','Paracétamol 1 g','Metformine 850 mg','Amlodipine 5 mg','Ibuprofène 400 mg','Oméprazole 20 mg','Lévothyroxine 75 µg','Salbutamol spray','Azithromycine 500 mg','Atorvastatine 20 mg'];
+const STOCK={'Amoxicilline/Ac. clavulanique 1 g':42,'Paracétamol 1 g':210,'Metformine 850 mg':3,'Amlodipine 5 mg':60,'Ibuprofène 400 mg':85,'Oméprazole 20 mg':0,'Lévothyroxine 75 µg':25,'Salbutamol spray':14,'Azithromycine 500 mg':9,'Atorvastatine 20 mg':30};
 const P={
- doctor:{n:'SIGHA Doctor',c:'#125B89',i:'D',org:'Cabinet médical · Constantine',u:'Dr Meriem Haddad',a:'MH'},
+ doctor:{n:'SIGHA Doctor',c:'#125B89',i:'D',org:'Cabinet de médecine générale · Constantine',u:'Dr Meriem Haddad',a:'MH'},
  lab:{n:'SIGHA Lab',c:'#1f9d6b',i:'L',org:'Laboratoire El Amel · Constantine',u:'Nabil Cherif, biologiste',a:'NC'},
  imaging:{n:'SIGHA Imaging',c:'#7a4fc2',i:'I',org:"Centre d'imagerie Ibn Sina · Constantine",u:'Dr Samir Ouali, radiologue',a:'SO'},
  pharmacy:{n:'SIGHA Pharmacy',c:'#d98200',i:'P',org:'Pharmacie Benyahia · Constantine',u:'Lamia Benyahia, pharmacienne',a:'LB'},
- hospital:{n:'SIGHA Hospital',c:'#c0392b',i:'H',org:'Centre Hospitalier Les Jasmins · Constantine',u:'Dr Yacine Mebarki, urgences',a:'YM'}
-};
-const S={v:'doctor',tab:{doctor:'consult',lab:'inbox',imaging:'inbox',pharmacy:'inbox',hospital:'dash'},
- labSent:0,labFilled:0,labDone:0,imgSent:0,imgAtt:0,imgDone:0,rxSent:0,rxDone:0,ref:0,adm:0};
-const LAB=[['Glycémie à jeun','1,86','g/L','0,70 – 1,10',1],['HbA1c','8,1','%','< 6,5',1],['CRP','48','mg/L','< 5',1],['Globules blancs','13,4','10³/µL','4,0 – 10,0',1],['Hémoglobine','13,2','g/dL','13,0 – 17,0',0]];
-const REP="Radiographie thoracique de face : foyer de condensation alvéolaire du lobe inférieur droit avec bronchogramme aérien. Pas d'épanchement pleural. Silhouette cardiaque de taille normale.\nConclusion : aspect compatible avec une pneumopathie franche lobaire inférieure droite.";
-const $=s=>document.querySelector(s);
-function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
-function chip(t,c){return `<span class="chip c-${c}">${t}</span>`}
-function step(){ if(!S.labSent&&!S.imgSent)return 0; if(!S.labDone||!S.imgDone)return S.labDone?2:1; if(!S.rxSent)return 3; if(!S.rxDone)return 4; return 5}
-const STEPS=[['1 · Médecin : demandes','doctor'],['2 · Labo : résultats','lab'],['3 · Imagerie : rapport','imaging'],['4 · Médecin : ordonnance','doctor'],['5 · Pharmacie : délivrance','pharmacy'],['6 · Hôpital : triage IA','hospital']];
-function badges(){return {doctor:(S.labDone&&S.imgDone&&!S.rxSent)?1:0,lab:(S.labSent&&!S.labDone)?1:0,imaging:(S.imgSent&&!S.imgDone)?1:0,pharmacy:(S.rxSent&&!S.rxDone)?1:0,hospital:(S.ref&&!S.adm)?1:0}}
-function go(v,t){S.v=v;if(t)S.tab[v]=t;render()}
-function tabs(list){return `<div class="tabs">${list.map(([k,l])=>`<button class="tab ${S.tab[S.v]==k?'on':''}" onclick="go('${S.v}','${k}')">${l}</button>`).join('')}</div>`}
-function xr(cls,l){return `<div class="im ${cls}"><em>${l}</em></div>`}
+ hospital:{n:'SIGHA Hospital',c:'#c0392b',i:'H',org:'Centre Hospitalier Les Jasmins · Constantine',u:'Dr Yacine Mebarki, urgences',a:'YM'}};
+const SECS={
+ doctor:[['dash','Tableau de bord','home'],['agenda','Agenda','cal'],['patients','Patients','user'],['exams','Examens','flask'],['rx','Ordonnances','file']],
+ lab:[['dash','Tableau de bord','home'],['agenda','Agenda','cal'],['orders','Demandes reçues','inbox'],['hist','Résultats envoyés','send']],
+ imaging:[['dash','Tableau de bord','home'],['agenda','Agenda','cal'],['orders','Demandes reçues','inbox'],['hist','Comptes rendus envoyés','send']],
+ pharmacy:[['dash','Tableau de bord','home'],['rx','Ordonnances','file']],
+ hospital:[['dash','Tableau de bord','home'],['incoming','Dossiers entrants','inbox'],['beds','Lits et services','bed']]};
 
-function doctor(){
- const t=S.tab.doctor;
- if(t=='agenda') return tabs([['agenda','Agenda'],['consult','Consultation']])+`<div class="card"><h3>Agenda du jeudi</h3><table><tr><th>Heure</th><th>Patient</th><th>Motif</th><th></th></tr>
- <tr><td>09:00</td><td>Amina Rahmani, 34 ans</td><td>Suivi grossesse</td><td>${chip('Terminé','ok')}</td></tr>
- <tr><td>09:30</td><td><b>Karim Bensalem, 52 ans</b></td><td>Toux persistante, fatigue</td><td><button class="btn" onclick="go('doctor','consult')">Ouvrir le dossier</button></td></tr>
- <tr><td>10:00</td><td>Walid Merabet, 8 ans</td><td>Certificat sportif</td><td>${chip('En attente','dr')}</td></tr></table></div>`;
- const lab=S.labDone?chip('Résultats reçus','ok'):S.labSent?chip('Envoyée · en cours','se'):chip('Brouillon','dr');
- const img=S.imgDone?chip('Rapport reçu','ok'):S.imgSent?chip('Envoyée · en cours','se'):chip('Brouillon','dr');
- const both=S.labDone&&S.imgDone;
- return tabs([['agenda','Agenda'],['consult','Consultation']])+`<div class="grid g3">
- <div class="card"><h3>Patient</h3><div style="font-size:16px;font-weight:bold">Karim Bensalem</div><div class="small">52 ans · Dossier SIGHA #2027-48215</div>
-  <div class="row"><span class="lbl">Antécédents</span><span>Diabète type 2, HTA</span></div>
-  <div class="row"><span class="lbl">Allergies</span><span>Aucune connue</span></div>
-  <div class="row"><span class="lbl">Motif</span><span>Toux 3 semaines, fièvre</span></div>
-  <div class="row"><span class="lbl">Constantes</span><span>T° 38,6 · SpO₂ 93 %</span></div>
-  <div style="margin-top:10px"><button class="btn ghost" ${both&&!S.ref?'':'disabled'} onclick="S.ref=1;toast('Dossier transmis à SIGHA Hospital');render()">${S.ref?'Adressé à l’hôpital ✓':'Adresser à l’hôpital'}</button></div></div>
- <div>
-  <div class="card"><h3>Analyses biologiques ${lab}</h3><div class="small">Vers : Laboratoire El Amel</div>
-   <div class="row"><span>NFS · Glycémie · HbA1c · CRP</span></div>
-   <div class="mt"><button class="btn" ${S.labSent?'disabled':''} onclick="S.labSent=1;toast('Demande envoyée au laboratoire');render()">Envoyer au laboratoire</button></div></div>
-  <div class="card mt"><h3>Imagerie ${img}</h3><div class="small">Vers : Centre d'imagerie Ibn Sina</div>
-   <div class="row"><span>Radiographie thorax face</span></div>
-   <div class="mt"><button class="btn" ${S.imgSent?'disabled':''} onclick="S.imgSent=1;toast('Demande envoyée au centre d’imagerie');render()">Envoyer à l'imagerie</button></div></div>
- </div>
- <div>
-  <div class="card"><h3>Résultats reçus</h3>${(S.labDone||S.imgDone)?(S.labDone?`<table>${LAB.map(r=>`<tr><td>${r[0]}</td><td class="${r[4]?'H':'N'}">${r[1]} ${r[2]}</td></tr>`).join('')}</table>`:'')+(S.imgDone?`<div class="imgs mt">${xr('xr','Rx thorax')}${xr('xr b','Rx profil')}</div><div class="small mt">${REP.split('\n')[1]}</div>`:''):'<div class="small">En attente des résultats…</div>'}</div>
-  <div class="card mt"><h3>Ordonnance ${S.rxDone?chip('Délivrée','ok'):S.rxSent?chip('Envoyée','se'):''}</h3>
-   <div class="row"><span>Amoxicilline/Ac. clav. 1 g</span><span class="small">1 cp ×2/j · 7 j</span></div>
-   <div class="row"><span>Paracétamol 1 g</span><span class="small">si fièvre</span></div>
-   <div class="row"><span>Metformine 850 mg</span><span class="small">1 cp ×2/j</span></div>
-   <div class="mt"><button class="btn gold" ${both&&!S.rxSent?'':'disabled'} onclick="S.rxSent=1;toast('Ordonnance envoyée à la pharmacie');render()">Envoyer à la pharmacie</button></div></div>
- </div></div>`;
+/* ---------- données ---------- */
+let DB,uid=100;const nid=()=>++uid;
+function log(from,to,text,ago=0){DB.log.unshift({id:nid(),t:new Date(Date.now()-ago*60000),from,to,text,read:ago>0})}
+function seed(){
+ const d=n=>fmt(addDays(today,n));
+ DB={patients:[
+  {id:1,nom:'Bensalem',prenom:'Karim',naiss:'1974-03-12',sexe:'M',tel:'0550 12 34 56',adr:'Cité Boussouf, Constantine',gs:'A+',all:'Aucune connue',ant:'Diabète de type 2, hypertension artérielle',trt:'Metformine 850 mg, Amlodipine 5 mg',notes:'Suivi régulier tous les 3 mois.'},
+  {id:2,nom:'Rahmani',prenom:'Amina',naiss:'1992-07-21',sexe:'F',tel:'0661 45 78 90',adr:'Zouaghi Slimane, Constantine',gs:'O+',all:'Pénicilline',ant:'Aucun',trt:'Acide folique',notes:'Grossesse en cours, 24 SA.'},
+  {id:3,nom:'Merabet',prenom:'Walid',naiss:'2018-01-09',sexe:'M',tel:'0770 22 11 33',adr:'El Khroub, Constantine',gs:'B+',all:'Aucune connue',ant:'Asthme léger',trt:'Salbutamol à la demande',notes:''},
+  {id:4,nom:'Boudjemaa',prenom:'Salima',naiss:'1985-11-30',sexe:'F',tel:'0555 98 76 54',adr:'Sidi Mabrouk, Constantine',gs:'A-',all:'Aucune connue',ant:'Hypothyroïdie',trt:'Lévothyroxine 75 µg',notes:''},
+  {id:5,nom:'Amrane',prenom:'Rachid',naiss:'1965-05-02',sexe:'M',tel:'0699 31 42 53',adr:'Ali Mendjeli, Constantine',gs:'AB+',all:'Aucune connue',ant:'Lithiase biliaire',trt:'',notes:'Douleurs abdominales récurrentes.'},
+  {id:6,nom:'Slimani',prenom:'Nadia',naiss:'1997-09-14',sexe:'F',tel:'0540 66 77 88',adr:'Daksi, Constantine',gs:'O-',all:'Aucune connue',ant:'Aucun',trt:'',notes:''}],
+ appts:[],orders:[],rx:[],refs:[],log:[],
+ wards:[{n:'Urgences',cap:30,occ:23},{n:'Pneumologie',cap:24,occ:20},{n:'Cardiologie',cap:28,occ:19},{n:'Chirurgie',cap:40,occ:37},{n:'Médecine interne',cap:30,occ:22},{n:'Pédiatrie',cap:24,occ:13}]};
+ const A=(owner,who,dt,time,dur,type,status)=>DB.appts.push({id:nid(),owner,who,date:d(dt),time,dur,type,status,notes:''});
+ A('doctor','Amina Rahmani',0,'09:00',30,'Suivi de grossesse','Terminé');A('doctor','Karim Bensalem',0,'09:30',30,'Toux persistante, fièvre','Confirmé');A('doctor','Walid Merabet',0,'10:00',20,'Certificat sportif','Confirmé');A('doctor','Salima Boudjemaa',0,'11:00',30,'Contrôle thyroïde','En attente');
+ A('doctor','Rachid Amrane',-1,'09:00',30,'Douleurs abdominales','Terminé');A('doctor','Nadia Slimani',-1,'10:30',30,'Toux, fatigue','Terminé');A('doctor','Rachid Amrane',1,'09:30',30,'Résultats échographie','Confirmé');A('doctor','Amina Rahmani',2,'11:00',30,'Contrôle','Confirmé');A('doctor','Karim Bensalem',3,'14:00',30,'Contrôle post-traitement','En attente');
+ A('lab','Salima Boudjemaa',0,'08:30',20,'Prélèvement sanguin','Confirmé');A('lab','Hocine Zerrouki',0,'09:00',20,'Bilan lipidique','Confirmé');A('lab','Amina Rahmani',0,'10:00',20,'Prélèvement NFS','Terminé');A('lab','Karim Bensalem',1,'08:30',30,'Bilan diabète','Confirmé');A('lab','Walid Merabet',2,'09:00',20,'Prélèvement','En attente');
+ A('imaging','Rachid Amrane',0,'11:00',30,'Échographie abdominale','Confirmé');A('imaging','Karim Bensalem',0,'14:00',30,'Radiographie thorax','En attente');A('imaging','Nadia Slimani',-1,'11:30',30,'Radiographie thorax','Terminé');A('imaging','Amina Rahmani',1,'10:00',45,'Échographie obstétricale','Confirmé');
+ const O=(type,pid,who,exams,status,dt,extra={})=>DB.orders.push(Object.assign({id:nid(),type,pid,who,exams,from:'Dr Haddad',date:d(dt),urgent:false,status,results:{},report:'',images:0,seen:status!='Terminée',note:''},extra));
+ O('lab',4,'Salima Boudjemaa',['TSH'],'Terminée',-1,{results:{TSH:'6.8'},seen:true});
+ O('lab',2,'Amina Rahmani',['Globules blancs','Hémoglobine'],'En cours',0);
+ O('lab',null,'Hocine Zerrouki',['Cholestérol total','LDL'],'Reçue',0);
+ O('img',5,'Rachid Amrane',['Échographie abdominale'],'Reçue',0);
+ O('img',6,'Nadia Slimani',['Radiographie thorax'],'Terminée',-1,{report:IMGCAT['Radiographie thorax'].t,images:2,seen:true});
+ DB.rx.push({id:nid(),pid:4,who:'Salima Boudjemaa',date:d(-1),diag:'Hypothyroïdie',items:[{drug:'Lévothyroxine 75 µg',dose:'1 cp le matin à jeun',duree:'3 mois'}],note:'',status:'Délivrée'});
+ DB.rx.push({id:nid(),pid:6,who:'Nadia Slimani',date:d(0),diag:'Bronchite',items:[{drug:'Paracétamol 1 g',dose:'1 cp si fièvre',duree:'5 jours'},{drug:'Ibuprofène 400 mg',dose:'1 cp ×2/j',duree:'3 jours'}],note:'',status:'Reçue'});
+ DB.refs.push({id:nid(),pid:null,who:'Omar Teffahi',age:47,motif:'Douleur thoracique, transport SAMU',from:'SAMU 25',date:d(0),urgent:'Urgente',vit:{temp:36.9,spo2:95,ta:'165/95'},status:'À trier'});
+ DB.refs.push({id:nid(),pid:6,who:'Nadia Slimani',age:29,motif:'Toux fébrile',from:'Dr Haddad',date:d(-1),urgent:'Normale',vit:{temp:38.2,spo2:96,ta:'120/75'},status:'Admis',service:'Pneumologie'});
+ log('lab','doctor','Résultats TSH disponibles : Salima Boudjemaa',1500);log('doctor','lab','Demande d’analyses : Amina Rahmani',200);log('doctor','imaging','Demande d’imagerie : Rachid Amrane',120);log('doctor','pharmacy','Ordonnance : Nadia Slimani',60);log('hospital','doctor','Patient admis : Nadia Slimani (Pneumologie)',1400);
+ DB.log.forEach((l,i)=>{l.read=false});
 }
-function lab(){
- const t=S.tab.lab;
- if(t=='stock') return tabs([['inbox','Demandes reçues'],['stock','Archives']])+`<div class="card"><h3>Analyses terminées aujourd'hui</h3><table><tr><th>Patient</th><th>Examen</th><th>Statut</th></tr><tr><td>Amina Rahmani</td><td>Sérologie, NFS</td><td>${chip('Envoyé','ok')}</td></tr><tr><td>Hocine Zerrouki</td><td>Bilan lipidique</td><td>${chip('Envoyé','ok')}</td></tr></table></div>`;
- const rows=`<tr><td>Salima Boudjemaa</td><td>Dr Khelifi</td><td>TSH</td><td>${chip('Terminé','ok')}</td></tr>`;
- return tabs([['inbox','Demandes reçues'],['stock','Archives']])+`<div class="grid g21"><div class="card"><h3>Demandes reçues ${S.labSent&&!S.labDone?chip('1 nouvelle','se'):''}</h3><table><tr><th>Patient</th><th>Médecin</th><th>Examen</th><th>Statut</th></tr>
- ${S.labSent?`<tr style="background:var(--gl)"><td><b>Karim Bensalem</b></td><td>Dr Haddad</td><td>NFS, glycémie, HbA1c, CRP</td><td>${S.labDone?chip('Envoyé','ok'):chip('À traiter','se')}</td></tr>`:''}${rows}</table>
- ${!S.labSent?'<div class="small mt">Aucune nouvelle demande. Le médecin doit d’abord envoyer sa demande.</div>':''}</div>
- <div class="card"><h3>Saisie des résultats</h3>${!S.labSent?'<div class="small">Sélectionnez une demande.</div>':`<div class="small">Karim Bensalem · prélèvement 09:45</div>
- <table><tr><th>Analyse</th><th>Valeur</th><th>Réf.</th></tr>${LAB.map(r=>`<tr><td>${r[0]}</td><td class="${S.labFilled?(r[4]?'H':'N'):''}">${S.labFilled?r[1]+' '+r[2]:'—'}</td><td class="small">${r[3]}</td></tr>`).join('')}</table>
- <div class="mt" style="display:flex;gap:8px"><button class="btn ghost" ${S.labFilled?'disabled':''} onclick="S.labFilled=1;toast('Résultats importés depuis l’automate');render()">Importer depuis l'automate</button><button class="btn" ${S.labFilled&&!S.labDone?'':'disabled'} onclick="S.labDone=1;toast('Résultats envoyés au Dr Haddad');render()">Valider et envoyer</button></div>`}</div></div>`;
-}
-function imaging(){
- const t=S.tab.imaging;
- return tabs([['inbox','Liste de travail'],['arch','Archives']])+`<div class="grid g21"><div class="card"><h3>Liste de travail ${S.imgSent&&!S.imgDone?chip('1 nouvelle','se'):''}</h3><table><tr><th>Patient</th><th>Prescripteur</th><th>Examen</th><th>Statut</th></tr>
- ${S.imgSent?`<tr style="background:var(--gl)"><td><b>Karim Bensalem</b></td><td>Dr Haddad</td><td>Rx thorax face</td><td>${S.imgDone?chip('Rapport envoyé','ok'):chip('À interpréter','se')}</td></tr>`:''}
- <tr><td>Rachid Amrane</td><td>Dr Khelifi</td><td>Écho abdominale</td><td>${chip('Rapport envoyé','ok')}</td></tr></table>
- ${!S.imgSent?'<div class="small mt">Aucune nouvelle demande pour le moment.</div>':''}
- <h3 class="mt">Images</h3><div class="imgs">${S.imgAtt?xr('xr','Rx thorax face')+xr('xr b','Rx profil')+xr('us','Écho'):'<div class="small">Aucune image jointe.</div>'}</div></div>
- <div class="card"><h3>Compte rendu</h3>${!S.imgSent?'<div class="small">Sélectionnez une demande.</div>':`<textarea id="rep" ${S.imgDone?'disabled':''}>${REP}</textarea>
- <div class="mt" style="display:flex;gap:8px"><button class="btn ghost" ${S.imgAtt?'disabled':''} onclick="S.imgAtt=1;toast('Images DICOM jointes');render()">Joindre les images</button><button class="btn" ${S.imgAtt&&!S.imgDone?'':'disabled'} onclick="S.imgDone=1;toast('Rapport + images envoyés au Dr Haddad');render()">Signer et envoyer</button></div>`}</div></div>`;
-}
-function pharmacy(){
- const stock=[['Amoxicilline/Ac. clav. 1 g',42,'ok'],['Paracétamol 1 g',210,'ok'],['Metformine 850 mg',3,'wa'],['Insuline glargine',0,'er']];
- return tabs([['inbox','Ordonnances reçues']])+`<div class="grid g21"><div class="card"><h3>Ordonnances reçues ${S.rxSent&&!S.rxDone?chip('1 nouvelle','se'):''}</h3>
- ${S.rxSent?`<div style="background:var(--gl);border-radius:8px;padding:10px"><b>Karim Bensalem</b> · prescrite par Dr Haddad ${S.rxDone?chip('Délivrée','ok'):chip('À préparer','se')}
- <table class="mt"><tr><th>Médicament</th><th>Posologie</th><th>Stock</th></tr><tr><td>Amoxicilline/Ac. clav. 1 g</td><td>1 cp ×2/j · 7 j</td><td>${chip('En stock','ok')}</td></tr><tr><td>Paracétamol 1 g</td><td>si fièvre</td><td>${chip('En stock','ok')}</td></tr><tr><td>Metformine 850 mg</td><td>1 cp ×2/j</td><td>${chip('Stock faible','se')}</td></tr></table>
- <div class="mt"><button class="btn gold" ${S.rxDone?'disabled':''} onclick="S.rxDone=1;toast('Délivrance confirmée · médecin notifié');render()">${S.rxDone?'Délivrée ✓':'Confirmer la délivrance'}</button></div></div>`:'<div class="small">Aucune ordonnance en attente.</div>'}
- <div class="row mt"><span>Salim Hadjadj · Dr Khelifi</span>${chip('Délivrée','ok')}</div></div>
- <div class="card"><h3>Stock</h3>${stock.map(s=>`<div class="row"><span>${s[0]}</span>${chip(s[1]?s[1]+' boîtes':'Rupture',s[2])}</div>`).join('')}</div></div>`;
-}
-function hospital(){
- const t=S.tab.hospital;
- const wards=[['Urgences',78,''],['Pneumologie',92,'w'],['Cardiologie',70,''],['Chirurgie',96,'e'],['Pédiatrie',55,'']];
- const dash=`<div class="grid g4"><div class="card kpi"><b>182 / 240</b><span>Lits occupés</span></div><div class="card kpi"><b>14</b><span>Patients en attente aux urgences</span></div><div class="card kpi"><b>37</b><span>Admissions du jour</span></div><div class="card kpi"><b>${S.ref?3:2}</b><span>Dossiers entrants (transferts)</span></div></div>
- <div class="grid g2 mt"><div class="card"><h3>Occupation par service</h3>${wards.map(w=>`<div class="row"><span style="width:110px">${w[0]}</span><div class="bar"><i class="${w[2]}" style="width:${w[1]}%"></i></div><b style="width:40px;text-align:right">${w[1]}%</b></div>`).join('')}</div>
- <div class="card"><h3>Dossiers entrants</h3><div class="row"><span>Nadia Slimani · Dr Khelifi</span>${chip('Admise','ok')}</div><div class="row"><span>Omar Teffahi · SAMU</span>${chip('Aux urgences','se')}</div>
- ${S.ref?`<div class="row" style="background:var(--gl)"><span><b>Karim Bensalem</b> · Dr Haddad</span>${S.adm?chip('Admis · Pneumologie','ok'):chip('À trier','se')}</div>`:''}</div></div>`;
- const ai=`<div class="grid g2"><div class="card"><h3>Dossier entrant</h3>${!S.ref?'<div class="small">Aucun dossier à trier. Le médecin doit adresser le patient depuis SIGHA Doctor.</div>':`<div style="font-size:16px;font-weight:bold">Karim Bensalem, 52 ans</div><div class="small">Adressé par Dr Haddad · dossier complet transmis</div>
- <div class="row"><span class="lbl">Constantes</span><span>T° 38,6 · SpO₂ 93 %</span></div><div class="row"><span class="lbl">Biologie</span><span class="H">CRP 48 · GB 13,4 · HbA1c 8,1</span></div><div class="row"><span class="lbl">Imagerie</span><span>Condensation lobaire inf. droite</span></div><div class="row"><span class="lbl">Ordonnance</span><span>Amoxicilline/Ac. clav.</span></div>`}</div>
- <div class="card ai"><h3>Assistant IA · aide au triage</h3>${!S.ref?'<div class="small">En attente d’un dossier.</div>':`<div style="font-size:15px"><b>Pneumopathie communautaire probable</b></div><div class="mt">Priorité : ${chip('3 / 5 · modérée','se')}</div>
- <ul style="padding-left:18px;margin:10px 0"><li>SpO₂ 93 % + diabète : surveillance rapprochée</li><li>Service suggéré : <b>Pneumologie</b> (6 lits libres)</li><li>Pas de signe de gravité immédiat (CURB-65 = 1)</li></ul>
- <div class="small">Suggestion à valider par le médecin. L'IA ne décide pas.</div>
- <div class="mt"><button class="btn" ${S.adm?'disabled':''} onclick="S.adm=1;toast('Admission validée · Pneumologie');render()">${S.adm?'Admission validée ✓':'Valider l’admission'}</button></div>`}</div></div>`;
- return tabs([['dash','Tableau de bord'],['ai','Triage IA']])+(t=='dash'?dash:ai);
-}
-const V={doctor,lab,imaging,pharmacy,hospital};
-function render(){
- const p=P[S.v],b=badges();
- $('#nav').innerHTML=Object.keys(P).map(k=>`<button class="${S.v==k?'on':''}" onclick="go('${k}')"><span class="ic" style="background:${P[k].c}">${P[k].i}</span>${P[k].n.replace('SIGHA ','')}${b[k]?`<span class="bdg">${b[k]}</span>`:''}</button>`).join('');
+seed();
+const U={p:'doctor',sec:{doctor:'dash',lab:'dash',imaging:'dash',pharmacy:'dash',hospital:'dash'},cal:{doctor:{v:'week',d:new Date(today)},lab:{v:'week',d:new Date(today)},imaging:{v:'week',d:new Date(today)}},pid:1,q:'',rxd:null,labEd:null,imgEd:null,ref:null,otab:'all'};
+const pat=id=>DB.patients.find(p=>p.id==id);
+const pname=p=>p.prenom+' '+p.nom;
+const pidByName=n=>{const p=DB.patients.find(p=>pname(p).toLowerCase()==String(n).trim().toLowerCase());return p?p.id:null};
+
+/* ---------- modal & forms ---------- */
+function closeM(){document.querySelectorAll('.ov').forEach(x=>x.remove())}
+function modal(title,body,btns,wide){closeM();const m=document.createElement('div');m.className='ov';m.innerHTML=`<div class="md ${wide?'wide':''}"><div class="mh"><b>${title}</b><button class="x" onclick="closeM()">×</button></div><div class="mb">${body}</div><div class="mf"></div></div>`;document.body.appendChild(m);const mf=m.querySelector('.mf');btns.forEach(b=>{const e=document.createElement('button');e.className='btn '+(b.c||'');e.textContent=b.l;e.onclick=()=>{if(b.f&&b.f()===false)return;closeM();render()};mf.appendChild(e)})}
+const fld=(id,l,v='',t='text',a='',cls='')=>`<label class="f ${cls}"><span>${l}</span><input id="f_${id}" type="${t}" value="${esc(v)}" ${a}></label>`;
+const sel=(id,l,opts,v,cls='',a='')=>`<label class="f ${cls}"><span>${l}</span><select id="f_${id}" ${a}>${opts.map(o=>{const[x,y]=Array.isArray(o)?o:[o,o];return `<option value="${esc(x)}" ${String(x)==String(v)?'selected':''}>${esc(y)}</option>`}).join('')}</select></label>`;
+const ta=(id,l,v='',cls='')=>`<label class="f ${cls}"><span>${l}</span><textarea id="f_${id}">${esc(v)}</textarea></label>`;
+const g=id=>document.getElementById('f_'+id).value;
+function confirmM(text,fn,label='Supprimer'){modal('Confirmation',`<p>${text}</p>`,[{l:'Annuler',c:'ghost'},{l:label,c:'red',f:fn}])}
+function toastGo(m){toast(m)}
+
+/* ---------- helpers UI ---------- */
+const kpis=a=>`<div class="grid g4">${a.map(k=>`<div class="card kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('')}</div>`;
+function feed(p){const items=DB.log.filter(l=>l.to==p||l.from==p).slice(0,6);const nm={doctor:'Doctor',lab:'Lab',imaging:'Imaging',pharmacy:'Pharmacy',hospital:'Hospital'};
+ return `<div class="card"><h3>Activité récente</h3><div class="feed">${items.length?items.map(l=>{const m=Math.round((Date.now()-l.t)/60000);const w=m<2?'à l’instant':m<60?`il y a ${m} min`:m<1440?`il y a ${Math.round(m/60)} h`:'hier';return `<div class="it"><i class="d"></i><div>${l.to==p?'<b>Reçu</b> de '+nm[l.from]:'<b>Envoyé</b> à '+nm[l.to]} · ${esc(l.text)}<small>${w}</small></div></div>`}).join(''):'<div class="small">Aucune activité.</div>'}</div></div>`}
+function weekBars(owner){const s=wkStart(today);const arr=[...Array(7)].map((_,i)=>{const dd=fmt(addDays(s,i));return{d:DJ[i],n:DB.appts.filter(a=>a.owner==owner&&a.date==dd&&a.status!='Annulé').length,t:dd==fmt(today)}});const mx=Math.max(1,...arr.map(a=>a.n));
+ return `<div class="card"><h3>Rendez-vous de la semaine</h3><div class="bars">${arr.map(a=>`<div class="${a.t?'td':''}"><b>${a.n}</b><i style="height:${a.n/mx*70+3}px"></i>${a.d}</div>`).join('')}</div></div>`}
+function todo(items){return `<div class="card"><h3>À faire</h3>${items.length?items.map(i=>`<div class="row"><span>${i[0]}</span><button class="btn sm" onclick="${i[2]}">${i[1]}</button></div>`).join(''):'<div class="small">Tout est à jour.</div>'}</div>`}
+function dayList(owner,fn){const t=fmt(today);const ap=DB.appts.filter(a=>a.owner==owner&&a.date==t).sort(byTime);return `<div class="card"><h3>Rendez-vous du jour ${chip(ap.length,'bl')}</h3><div class="tl">${ap.length?ap.map(a=>`<div class="it" onclick="apptM(${a.id})"><span class="tm">${a.time}</span><div style="flex:1"><b>${esc(a.who)}</b><div class="small">${esc(a.type)} · ${a.dur} min</div></div>${st(a.status)}</div>`).join(''):'<div class="small">Aucun rendez-vous aujourd’hui.</div>'}</div></div>`}
+function go(p,sec){U.p=p;if(sec)U.sec[p]=sec;render()}
+function sc(sec){U.sec[U.p]=sec;render()}
+function imgThumbs(kind,n,normal){let h='';for(let i=0;i<n;i++)h+=`<div class="im ${kind=='us'?'us':normal?'xr n':'xr'}"><em>${kind=='us'?'Écho':'Image'} ${i+1}</em></div>`;return h}
+function notifs(){const l=DB.log.filter(x=>x.to==U.p);modal('Notifications',l.length?l.map(x=>`<div class="row"><span>${esc(x.text)}<div class="small">de ${P[x.from].n}</div></span>${x.read?'':chip('Nouveau','se')}</div>`).join(''):'<div class="small">Aucune notification.</div>',[{l:'Fermer',c:'ghost'}]);l.forEach(x=>x.read=true)}
+
+/* ---------- calendrier ---------- */
+const ROW=34;
+function calendar(owner){
+ const C=U.cal[owner];const apps=DB.appts.filter(a=>a.owner==owner);
+ let title,body;
+ if(C.v=='week'){const s=wkStart(C.d),e=addDays(s,6);title=`${s.getDate()} ${s.getMonth()!=e.getMonth()?MO[s.getMonth()].slice(0,4)+'.':''} – ${e.getDate()} ${MO[e.getMonth()]} ${e.getFullYear()}`;
+  const days=[...Array(7)].map((_,i)=>addDays(s,i));
+  body=`<div class="wk"><div class="wkh"><div></div>${days.map(d=>`<div class="${fmt(d)==fmt(today)?'tdy':''}">${DJ[d.getDay()]}<b>${d.getDate()}</b></div>`).join('')}</div><div class="wkb" style="height:${20*ROW}px"><div class="hrs">${[...Array(10)].map((_,i)=>`<div>${pad(8+i)}:00</div>`).join('')}</div>${days.map(d=>{const ds=fmt(d);const cl=(ds==fmt(today)?'tdy ':'')+((d.getDay()==5||d.getDay()==6)?'we':'');
+   return `<div class="dc ${cl}" onclick="slotClick(event,'${owner}','${ds}')">${apps.filter(a=>a.date==ds).map(a=>{const top=(mins(a.time)-480)/30*ROW+1,h=Math.max(a.dur/30*ROW-3,22);const c={'Confirmé':'ok','En attente':'se','Terminé':'dn','Annulé':'er'}[a.status];return `<div class="ap ${c}" style="top:${top}px;height:${h}px" onclick="event.stopPropagation();apptM(${a.id})"><b>${esc(a.time)} ${esc(a.who)}</b>${esc(a.type)}</div>`}).join('')}</div>`}).join('')}</div></div>`;
+ }else{const f=new Date(C.d.getFullYear(),C.d.getMonth(),1);title=MO[f.getMonth()][0].toUpperCase()+MO[f.getMonth()].slice(1)+' '+f.getFullYear();const s=wkStart(f);const n=Math.ceil((f.getDay()+new Date(f.getFullYear(),f.getMonth()+1,0).getDate())/7)*7;
+  body=`<div class="mo">${DJ.map(x=>`<div class="h">${x}</div>`).join('')}${[...Array(n)].map((_,i)=>{const d=addDays(s,i),ds=fmt(d),a=apps.filter(x=>x.date==ds&&x.status!='Annulé').sort(byTime);return `<div class="c ${d.getMonth()!=f.getMonth()?'o':''} ${ds==fmt(today)?'tdy':''}" onclick="calDay('${owner}','${ds}')"><div class="n">${d.getDate()}</div>${a.slice(0,3).map(x=>`<div class="e">${x.time} ${esc(x.who)}</div>`).join('')}${a.length>3?`<div class="small">+${a.length-3} autres</div>`:''}</div>`}).join('')}</div>`}
+ return `<div class="ph"><h2>Agenda</h2><div class="sp"><button class="btn" onclick="apptM(0,'${owner}')">+ Nouveau rendez-vous</button></div></div>
+ <div class="cb"><button class="btn ghost sm" onclick="calNav('${owner}',-1)">‹</button><button class="btn ghost sm" onclick="calNav('${owner}',1)">›</button><button class="btn ghost sm" onclick="calToday('${owner}')">Aujourd’hui</button><h2>${title}</h2><span class="seg"><button class="${C.v=='week'?'on':''}" onclick="calView('${owner}','week')">Semaine</button><button class="${C.v=='month'?'on':''}" onclick="calView('${owner}','month')">Mois</button></span></div>${body}`}
+function calNav(o,k){const C=U.cal[o];if(C.v=='week')C.d=addDays(C.d,7*k);else C.d=new Date(C.d.getFullYear(),C.d.getMonth()+k,1);render()}
+function calToday(o){U.cal[o].d=new Date(today);render()}
+function calView(o,v){U.cal[o].v=v;render()}
+function calDay(o,ds){U.cal[o].d=parse(ds);U.cal[o].v='week';render()}
+function slotClick(e,o,ds){const r=e.currentTarget.getBoundingClientRect();const slot=Math.max(0,Math.min(19,Math.floor((e.clientY-r.top)/ROW)));apptM(0,o,ds,hhmm(480+slot*30))}
+function apptM(id,owner,ds,time){
+ const a=id?DB.appts.find(x=>x.id==id):{owner,who:'',date:ds||fmt(today),time:time||'09:00',dur:30,type:'',status:'Confirmé',notes:''};owner=a.owner;
+ const body=`<datalist id="pl">${DB.patients.map(p=>`<option value="${esc(pname(p))}">`).join('')}</datalist><div class="fg">${fld('who','Patient',a.who,'text','list="pl" placeholder="Nom du patient"','full')}${fld('date','Date',a.date,'date')}${fld('time','Heure',a.time,'time','step="900" min="08:00" max="18:00"')}${sel('dur','Durée',[15,20,30,45,60].map(x=>[x,x+' min']),a.dur)}${sel('status','Statut',['Confirmé','En attente','Terminé','Annulé'],a.status)}${fld('type','Motif / type d’examen',a.type,'text','','full')}${ta('notes','Notes',a.notes,'full')}</div>`;
+ const b=[{l:'Annuler',c:'ghost'}];if(id)b.push({l:'Supprimer',c:'red',f:()=>{DB.appts=DB.appts.filter(x=>x.id!=id);toast('Rendez-vous supprimé')}});
+ b.push({l:'Enregistrer',f:()=>{if(!g('who').trim()){toast('Indiquez le patient');return false}Object.assign(a,{who:g('who').trim(),date:g('date'),time:g('time'),dur:+g('dur'),status:g('status'),type:g('type'),notes:g('notes')});if(!id){a.id=nid();DB.appts.push(a)}toast(id?'Rendez-vous modifié':'Rendez-vous ajouté')}});
+ modal(id?'Modifier le rendez-vous':'Nouveau rendez-vous',body,b)}
+
+/* ---------- DOCTOR ---------- */
+function dDash(){const unseen=DB.orders.filter(o=>o.status=='Terminée'&&!o.seen);const dr=DB.rx.filter(r=>r.status=='Brouillon');const pend=DB.appts.filter(a=>a.owner=='doctor'&&a.status=='En attente');
+ const t=[...unseen.map(o=>[`Résultats ${o.type=='lab'?'d’analyses':'d’imagerie'} : <b>${esc(o.who)}</b>`,'Consulter',`viewOrder(${o.id})`]),...dr.map(r=>[`Ordonnance en brouillon : <b>${esc(r.who)}</b>`,'Ouvrir',`editRx(${r.id})`]),...pend.map(a=>[`RDV à confirmer : <b>${esc(a.who)}</b> · ${dlong(a.date)} ${a.time}`,'Voir',`apptM(${a.id})`])];
+ return kpis([[DB.appts.filter(a=>a.owner=='doctor'&&a.date==fmt(today)&&a.status!='Annulé').length,'Rendez-vous aujourd’hui'],[DB.patients.length,'Patients suivis'],[unseen.length,'Résultats à consulter'],[DB.rx.filter(r=>r.status!='Brouillon').length,'Ordonnances envoyées']])+`<div class="grid g21 mt"><div class="col">${dayList('doctor')}${todo(t)}</div><div class="col">${weekBars('doctor')}${feed('doctor')}</div></div>`}
+function patList(){const q=U.q.toLowerCase();return DB.patients.filter(p=>pname(p).toLowerCase().includes(q)).map(p=>`<div class="pi ${p.id==U.pid?'on':''}" onclick="U.pid=${p.id};render()"><div class="av">${esc((p.prenom[0]+p.nom[0]))}</div><div><b>${esc(pname(p))}</b><div class="small">${age(p.naiss)} ans · ${p.sexe=='M'?'Homme':'Femme'}</div></div></div>`).join('')||'<div class="small">Aucun résultat.</div>'}
+function dPatients(){const p=pat(U.pid);let det='<div class="card small">Sélectionnez un patient.</div>';
+ if(p){const ap=DB.appts.filter(a=>a.owner=='doctor'&&a.who==pname(p)).sort(byTime),ex=DB.orders.filter(o=>o.pid==p.id),rx=DB.rx.filter(r=>r.pid==p.id);
+  det=`<div class="col"><div class="card"><h3>Dossier patient</h3><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:18px;font-weight:bold">${esc(pname(p))}</div><div class="small">${age(p.naiss)} ans · né(e) le ${parse(p.naiss).toLocaleDateString('fr-FR')} · Dossier SIGHA #2027-${48200+p.id}</div></div><div><button class="btn ghost sm" onclick="patM(${p.id})">Modifier</button> <button class="btn red sm" onclick="delPat(${p.id})">Supprimer</button></div></div>
+  <div class="grid g2 mt"><div><div class="row"><span class="lbl">Téléphone</span><span>${esc(p.tel)}</span></div><div class="row"><span class="lbl">Adresse</span><span>${esc(p.adr)}</span></div><div class="row"><span class="lbl">Groupe sanguin</span><span>${esc(p.gs)}</span></div></div><div><div class="row"><span class="lbl">Allergies</span><span class="${p.all&&!/aucune/i.test(p.all)?'H':''}">${esc(p.all||'—')}</span></div><div class="row"><span class="lbl">Antécédents</span><span>${esc(p.ant||'—')}</span></div><div class="row"><span class="lbl">Traitement</span><span>${esc(p.trt||'—')}</span></div></div></div>
+  ${p.notes?`<div class="small mt"><b>Notes :</b> ${esc(p.notes)}</div>`:''}
+  <div class="mt" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" onclick="apptM(0,'doctor')">+ Rendez-vous</button><button class="btn sm" onclick="orderM(${p.id})">+ Demande d’examen</button><button class="btn sm gold" onclick="newRx(${p.id})">+ Ordonnance</button><button class="btn sm ghost" onclick="refM(${p.id})">Adresser à l’hôpital</button></div></div>
+  <div class="grid g2"><div class="card"><h3>Rendez-vous</h3>${ap.length?ap.map(a=>`<div class="row"><span>${dlong(a.date)} ${a.time} · ${esc(a.type)}</span>${st(a.status)}</div>`).join(''):'<div class="small">Aucun.</div>'}</div><div class="card"><h3>Examens et ordonnances</h3>${ex.map(o=>`<div class="row"><span>${o.type=='lab'?'Analyses':'Imagerie'} : ${esc(o.exams.join(', '))}</span>${st(o.status)}</div>`).join('')}${rx.map(r=>`<div class="row"><span>Ordonnance du ${dlong(r.date)}</span>${st(r.status)}</div>`).join('')}${!ex.length&&!rx.length?'<div class="small">Aucun.</div>':''}</div></div></div>`}
+ return `<div class="ph"><h2>Patients</h2><div class="sp"><button class="btn" onclick="patM(0)">+ Nouveau patient</button></div></div><div class="grid g31"><div class="card"><input class="search" style="max-width:none" placeholder="Rechercher un patient…" value="${esc(U.q)}" oninput="U.q=this.value;$('#plist').innerHTML=patList()"><div class="pl" id="plist">${patList()}</div></div>${det}</div>`}
+function patM(id){const p=id?pat(id):{nom:'',prenom:'',naiss:'1990-01-01',sexe:'F',tel:'',adr:'',gs:'O+',all:'Aucune connue',ant:'',trt:'',notes:''};
+ modal(id?'Modifier le patient':'Nouveau patient',`<div class="fg">${fld('prenom','Prénom',p.prenom)}${fld('nom','Nom',p.nom)}${fld('naiss','Date de naissance',p.naiss,'date')}${sel('sexe','Sexe',[['F','Femme'],['M','Homme']],p.sexe)}${fld('tel','Téléphone',p.tel)}${sel('gs','Groupe sanguin',['A+','A-','B+','B-','AB+','AB-','O+','O-'],p.gs)}${fld('adr','Adresse',p.adr,'text','','full')}${fld('all','Allergies',p.all,'text','','full')}${fld('ant','Antécédents médicaux',p.ant,'text','','full')}${fld('trt','Traitement en cours',p.trt,'text','','full')}${ta('notes','Notes médicales',p.notes,'full')}</div>`,
+ [{l:'Annuler',c:'ghost'},{l:'Enregistrer',f:()=>{if(!g('nom').trim()||!g('prenom').trim()){toast('Nom et prénom requis');return false}Object.assign(p,{prenom:g('prenom').trim(),nom:g('nom').trim(),naiss:g('naiss'),sexe:g('sexe'),tel:g('tel'),gs:g('gs'),adr:g('adr'),all:g('all'),ant:g('ant'),trt:g('trt'),notes:g('notes')});if(!id){p.id=nid();DB.patients.push(p);U.pid=p.id}toast(id?'Patient modifié':'Patient ajouté')}}],true)}
+function delPat(id){const p=pat(id);confirmM(`Supprimer le dossier de <b>${esc(pname(p))}</b> et ses rendez-vous ?`,()=>{DB.patients=DB.patients.filter(x=>x.id!=id);DB.appts=DB.appts.filter(a=>a.who!=pname(p));U.pid=DB.patients[0]?.id;toast('Patient supprimé')})}
+function dExams(){const f=U.otab;const l=DB.orders.filter(o=>f=='all'||(f=='lab'&&o.type=='lab')||(f=='img'&&o.type=='img')).sort((a,b)=>b.date.localeCompare(a.date));
+ return `<div class="ph"><h2>Examens prescrits</h2><div class="sp"><button class="btn" onclick="orderM(U.pid)">+ Nouvelle demande</button></div></div><div class="tabs">${[['all','Tous'],['lab','Analyses'],['img','Imagerie']].map(t=>`<button class="${f==t[0]?'on':''}" onclick="U.otab='${t[0]}';render()">${t[1]}</button>`).join('')}</div><div class="card"><table><tr><th>Date</th><th>Patient</th><th>Type</th><th>Examens</th><th>Envoyé à</th><th>Statut</th><th></th></tr>${l.map(o=>`<tr><td>${dlong(o.date)}</td><td><b>${esc(o.who)}</b></td><td>${o.type=='lab'?'Analyses':'Imagerie'} ${o.urgent?chip('Urgent','er'):''}</td><td>${esc(o.exams.join(', '))}</td><td class="small">${o.type=='lab'?'Labo El Amel':'Imagerie Ibn Sina'}</td><td>${st(o.status)}${o.status=='Terminée'&&!o.seen?' '+chip('Nouveau','se'):''}</td><td class="right">${o.status=='Terminée'?`<button class="btn sm" onclick="viewOrder(${o.id})">Résultats</button>`:o.status=='Reçue'?`<button class="btn sm red" onclick="cancelOrder(${o.id})">Annuler</button>`:''}</td></tr>`).join('')}</table></div>`}
+function orderM(pid){const type0='lab';
+ const body=`<div class="fg">${sel('pid','Patient',DB.patients.map(p=>[p.id,pname(p)]),pid||DB.patients[0]?.id)}${sel('type','Type',[['lab','Analyses biologiques'],['img','Imagerie médicale']],type0,'','onchange="fillEx()"')}<div class="full"><span class="lbl">EXAMENS</span><div id="exl"></div></div>${sel('urg','Priorité',[['0','Normale'],['1','Urgente']],'0')}${fld('note','Renseignement clinique','','text','','full')}</div>`;
+ modal('Nouvelle demande d’examen',body,[{l:'Annuler',c:'ghost'},{l:'Envoyer',f:()=>{const ex=[...document.querySelectorAll('#exl input:checked')].map(x=>x.value);if(!ex.length){toast('Choisissez au moins un examen');return false}const p=pat(g('pid')),type=g('type');DB.orders.push({id:nid(),type,pid:p.id,who:pname(p),exams:ex,from:'Dr Haddad',date:fmt(today),urgent:g('urg')=='1',status:'Reçue',results:{},report:'',images:0,seen:false,note:g('note')});log('doctor',type=='lab'?'lab':'imaging',(type=='lab'?'Demande d’analyses : ':'Demande d’imagerie : ')+pname(p));toast('Demande envoyée au '+(type=='lab'?'laboratoire':'centre d’imagerie'))}}],true);fillEx()}
+function fillEx(){const t=g('type');const names=t=='lab'?Object.keys(LABCAT):Object.keys(IMGCAT);$('#exl').innerHTML=`<div class="fg">${names.map(n=>`<label class="chk"><input type="checkbox" value="${esc(n)}">${esc(n)}</label>`).join('')}</div>`}
+function cancelOrder(id){confirmM('Annuler cette demande ?',()=>{DB.orders=DB.orders.filter(o=>o.id!=id);toast('Demande annulée')},'Annuler la demande')}
+function viewOrder(id){const o=DB.orders.find(x=>x.id==id);o.seen=true;let b;
+ if(o.type=='lab')b=`<table><tr><th>Analyse</th><th>Résultat</th><th>Référence</th></tr>${o.exams.map(e=>{const c=LABCAT[e],v=o.results[e];const f=flag(e,v);return `<tr><td>${esc(e)}</td><td class="${f=='Normal'?'N':'H'}">${esc(v??'—')} ${c.u} ${f&&f!='Normal'?'('+f+')':''}</td><td class="small">${c.lo} – ${c.hi}</td></tr>`}).join('')}</table>`;
+ else b=`<div class="imgs">${imgThumbs(IMGCAT[o.exams[0]].k,o.images,!/condensation/.test(o.report))}</div><div class="mt" style="white-space:pre-line">${esc(o.report)}</div>`;
+ modal(`${o.type=='lab'?'Résultats d’analyses':'Compte rendu d’imagerie'} · ${esc(o.who)}`,b,[{l:'Fermer',c:'ghost'},{l:'Imprimer',f:()=>{toast('Impression simulée')}}],true)}
+function flag(e,v){if(v==null||v==='')return '';const x=+String(v).replace(',','.');if(isNaN(x))return '';const c=LABCAT[e];return x<c.lo?'Bas':x>c.hi?'Élevé':'Normal'}
+/* ordonnances */
+function newRx(pid){U.rxd={pid:pid||U.pid||DB.patients[0].id,diag:'',items:[{drug:'',dose:'',duree:''}],note:''};go('doctor','rx')}
+function editRx(id){const r=DB.rx.find(x=>x.id==id);U.rxd=JSON.parse(JSON.stringify(r));U.rxd.id=id;go('doctor','rx')}
+function dRx(){if(U.rxd)return rxEditor();const l=[...DB.rx].sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+ return `<div class="ph"><h2>Ordonnances</h2><div class="sp"><button class="btn gold" onclick="newRx()">+ Nouvelle ordonnance</button></div></div><div class="card"><table><tr><th>Date</th><th>Patient</th><th>Diagnostic</th><th>Médicaments</th><th>Statut</th><th></th></tr>${l.map(r=>`<tr><td>${dlong(r.date)}</td><td><b>${esc(r.who)}</b></td><td>${esc(r.diag)}</td><td class="small">${esc(r.items.map(i=>i.drug).join(' · '))}</td><td>${st(r.status)}</td><td class="right">${r.status=='Brouillon'?`<button class="btn sm" onclick="editRx(${r.id})">Modifier</button> <button class="btn sm red" onclick="delRx(${r.id})">Supprimer</button>`:`<button class="btn sm ghost" onclick="viewRx(${r.id})">Voir</button>`}</td></tr>`).join('')}</table></div>`}
+function rxEditor(){const d=U.rxd,p=pat(d.pid);return `<div class="ph"><h2>${d.id?'Modifier l’ordonnance':'Nouvelle ordonnance'}</h2><div class="sp"><button class="btn ghost" onclick="U.rxd=null;render()">Retour</button></div></div>
+ <datalist id="dl">${DRUGS.map(x=>`<option value="${esc(x)}">`).join('')}</datalist><div class="grid g12"><div class="col"><div class="card"><h3>Patient</h3><select onchange="U.rxd.pid=+this.value;render()">${DB.patients.map(x=>`<option value="${x.id}" ${x.id==d.pid?'selected':''}>${esc(pname(x))}</option>`).join('')}</select>
+ <div class="row mt"><span class="lbl">Âge</span><span>${p?age(p.naiss)+' ans':''}</span></div><div class="row"><span class="lbl">Allergies</span><span class="${p&&!/aucune/i.test(p.all)?'H':''}">${esc(p?.all||'—')}</span></div><div class="row"><span class="lbl">Traitement en cours</span><span>${esc(p?.trt||'—')}</span></div></div>
+ <div class="card"><h3>Diagnostic</h3><input value="${esc(d.diag)}" oninput="U.rxd.diag=this.value" placeholder="Ex : Pneumopathie communautaire"></div></div>
+ <div class="card"><h3>Prescription</h3><table><tr><th>Médicament</th><th>Posologie</th><th>Durée</th><th></th></tr>${d.items.map((it,i)=>`<tr><td><input list="dl" value="${esc(it.drug)}" oninput="U.rxd.items[${i}].drug=this.value" placeholder="Médicament"></td><td><input value="${esc(it.dose)}" oninput="U.rxd.items[${i}].dose=this.value" placeholder="1 cp ×2/j"></td><td><input value="${esc(it.duree)}" oninput="U.rxd.items[${i}].duree=this.value" placeholder="7 jours" style="width:90px"></td><td><button class="btn sm red" onclick="U.rxd.items.splice(${i},1);if(!U.rxd.items.length)U.rxd.items.push({drug:'',dose:'',duree:''});render()">×</button></td></tr>`).join('')}</table>
+ <button class="btn sm ghost mt" onclick="U.rxd.items.push({drug:'',dose:'',duree:''});render()">+ Ajouter un médicament</button>
+ <label class="f mt"><span>Instructions au patient</span><textarea oninput="U.rxd.note=this.value">${esc(d.note)}</textarea></label>
+ <div class="mt" style="display:flex;gap:8px;justify-content:flex-end"><button class="btn ghost" onclick="saveRx(false)">Enregistrer le brouillon</button><button class="btn gold" onclick="saveRx(true)">Envoyer à la pharmacie</button></div></div></div>`}
+function saveRx(send){const d=U.rxd,p=pat(d.pid);d.items=d.items.filter(i=>i.drug.trim());if(!d.items.length){toast('Ajoutez au moins un médicament');if(!d.items.length)d.items.push({drug:'',dose:'',duree:''});return}
+ const doSave=()=>{const r={id:d.id||nid(),pid:p.id,who:pname(p),date:fmt(today),diag:d.diag,items:d.items,note:d.note,status:send?'Reçue':'Brouillon'};const i=DB.rx.findIndex(x=>x.id==r.id);if(i>=0)DB.rx[i]=r;else DB.rx.push(r);if(send)log('doctor','pharmacy','Ordonnance : '+pname(p));U.rxd=null;toast(send?'Ordonnance envoyée à la pharmacie':'Brouillon enregistré');render()};
+ if(send&&/p[ée]nicilline/i.test(p.all)&&d.items.some(i=>/amoxi|p[ée]nic|ampi/i.test(i.drug))){modal('Alerte allergie',`<div class="warn"><b>${esc(pname(p))}</b> est allergique à la pénicilline. Un médicament de la famille des pénicillines est prescrit.</div>`,[{l:'Modifier',c:'ghost'},{l:'Envoyer quand même',c:'red',f:()=>{doSave();return false}}]);return}
+ doSave()}
+function delRx(id){confirmM('Supprimer ce brouillon ?',()=>{DB.rx=DB.rx.filter(r=>r.id!=id);toast('Brouillon supprimé')})}
+function viewRx(id){const r=DB.rx.find(x=>x.id==id);modal('Ordonnance · '+esc(r.who),`<div class="small">${dlong(r.date)} · ${esc(r.diag)}</div><table class="mt"><tr><th>Médicament</th><th>Posologie</th><th>Durée</th></tr>${r.items.map(i=>`<tr><td>${esc(i.drug)}</td><td>${esc(i.dose)}</td><td>${esc(i.duree)}</td></tr>`).join('')}</table><div class="mt">${st(r.status)}</div>${r.note?`<p class="small">${esc(r.note)}</p>`:''}`,[{l:'Fermer',c:'ghost'}])}
+/* orientation hôpital */
+function refM(pid){const p=pat(pid);modal('Adresser à l’hôpital',`<div class="small">Patient : <b>${esc(pname(p))}</b>. Le dossier, les résultats et les rapports sont transmis automatiquement.</div><div class="fg mt">${fld('motif','Motif d’adressage','Toux fébrile','text','','full')}${sel('urg','Urgence',['Normale','Urgente'],'Normale')}${fld('temp','Température (°C)','38.6','number','step="0.1"')}${fld('spo2','SpO₂ (%)','93','number')}${fld('ta','Tension','130/80')}</div>`,[{l:'Annuler',c:'ghost'},{l:'Envoyer',f:()=>{DB.refs.push({id:nid(),pid:p.id,who:pname(p),age:age(p.naiss),motif:g('motif'),from:'Dr Haddad',date:fmt(today),urgent:g('urg'),vit:{temp:+g('temp'),spo2:+g('spo2'),ta:g('ta')},status:'À trier'});log('doctor','hospital','Dossier adressé : '+pname(p));toast('Dossier transmis à SIGHA Hospital')}}],true)}
+
+/* ---------- LAB ---------- */
+function ordersFor(type){return DB.orders.filter(o=>o.type==type)}
+function oDash(type){const l=ordersFor(type),o=type=='lab'?'lab':'imaging';const nw=l.filter(x=>x.status=='Reçue'),en=l.filter(x=>x.status=='En cours'),dn=l.filter(x=>x.status=='Terminée');const lab=type=='lab';
+ const t=[...nw.map(x=>[`Nouvelle demande : <b>${esc(x.who)}</b> · ${esc(x.exams.join(', '))} ${x.urgent?chip('Urgent','er'):''}`,'Traiter',`openOrder(${x.id})`]),...en.map(x=>[`En cours : <b>${esc(x.who)}</b>`,'Reprendre',`openOrder(${x.id})`])];
+ return kpis([[nw.length,'Demandes à traiter'],[en.length,'En cours'],[dn.length,lab?'Résultats envoyés':'Rapports envoyés'],[DB.appts.filter(a=>a.owner==o&&a.date==fmt(today)&&a.status!='Annulé').length,'Rendez-vous aujourd’hui']])+`<div class="grid g21 mt"><div class="col">${todo(t)}${dayList(o)}</div><div class="col">${weekBars(o)}${feed(o)}</div></div>`}
+function openOrder(id){const o=DB.orders.find(x=>x.id==id);if(o.status=='Reçue')o.status='En cours';if(o.type=='lab')U.labEd=id;else U.imgEd=id;go(o.type=='lab'?'lab':'imaging','orders')}
+function oList(type){const l=ordersFor(type).filter(o=>o.status!='Terminée');const f=U.otab2||'all';const lab=type=='lab';
+ return `<div class="ph"><h2>Demandes reçues</h2></div><div class="card"><table><tr><th>Reçue</th><th>Patient</th><th>Prescripteur</th><th>Examens</th><th>Statut</th><th></th></tr>${l.map(o=>`<tr class="clk" onclick="openOrder(${o.id})"><td>${dlong(o.date)}</td><td><b>${esc(o.who)}</b> ${o.urgent?chip('Urgent','er'):''}</td><td>${o.from}</td><td>${esc(o.exams.join(', '))}</td><td>${st(o.status)}</td><td class="right"><button class="btn sm">${lab?'Saisir les résultats':'Rédiger le compte rendu'}</button></td></tr>`).join('')||`<tr><td colspan="6" class="small">Aucune demande en attente.</td></tr>`}</table></div>`}
+function labEditor(){const o=DB.orders.find(x=>x.id==U.labEd);return `<div class="ph"><h2>Saisie des résultats</h2><div class="sp"><button class="btn ghost" onclick="U.labEd=null;render()">Retour</button></div></div><div class="grid g12"><div class="card"><h3>Dossier</h3><div style="font-size:17px;font-weight:bold">${esc(o.who)}</div><div class="row"><span class="lbl">Prescripteur</span><span>${o.from}</span></div><div class="row"><span class="lbl">Reçue le</span><span>${dlong(o.date)}</span></div><div class="row"><span class="lbl">Priorité</span><span>${o.urgent?chip('Urgente','er'):'Normale'}</span></div>${o.note?`<div class="small mt"><b>Clinique :</b> ${esc(o.note)}</div>`:''}</div>
+ <div class="card"><h3>Résultats</h3><table><tr><th>Analyse</th><th>Valeur</th><th>Unité</th><th>Référence</th><th>Interprétation</th></tr>${o.exams.map((e,i)=>{const c=LABCAT[e];return `<tr><td>${esc(e)}</td><td><input class="num" id="lv${i}" value="${esc(o.results[e]??'')}" oninput="lflag(${i},'${e}')"></td><td>${c.u}</td><td class="small">${c.lo} – ${c.hi}</td><td id="lf${i}"></td></tr>`}).join('')}</table>
+ <div class="mt" style="display:flex;gap:8px;justify-content:flex-end"><button class="btn ghost" onclick="labImport(${o.id})">Importer depuis l’automate</button><button class="btn" onclick="labSend(${o.id})">Valider et envoyer au médecin</button></div></div></div>`}
+function lflag(i,e){const f=flag(e,$('#lv'+i).value);$('#lf'+i).innerHTML=f?(f=='Normal'?chip('Normal','ok'):chip(f,'er')):''}
+function labImport(id){const o=DB.orders.find(x=>x.id==id);o.exams.forEach(e=>{const c=LABCAT[e];o.results[e]=String(o.pid==1&&KARIM[e]!=null?KARIM[e]:c.m)});toast('Résultats importés depuis l’automate');render();o.exams.forEach((e,i)=>lflag(i,e))}
+function labSend(id){const o=DB.orders.find(x=>x.id==id);const r={};let ok=true;o.exams.forEach((e,i)=>{const v=$('#lv'+i).value.trim();if(v===''||isNaN(+v.replace(',','.')))ok=false;r[e]=v});if(!ok){toast('Complétez toutes les valeurs numériques');return}o.results=r;o.status='Terminée';o.seen=false;log('lab','doctor','Résultats disponibles : '+o.who);U.labEd=null;toast('Résultats envoyés au Dr Haddad');render()}
+function imgEditor(){const o=DB.orders.find(x=>x.id==U.imgEd);const c=IMGCAT[o.exams[0]];return `<div class="ph"><h2>Compte rendu d’imagerie</h2><div class="sp"><button class="btn ghost" onclick="U.imgEd=null;render()">Retour</button></div></div><div class="grid g12"><div class="card"><h3>Dossier</h3><div style="font-size:17px;font-weight:bold">${esc(o.who)}</div><div class="row"><span class="lbl">Prescripteur</span><span>${o.from}</span></div><div class="row"><span class="lbl">Examen</span><span>${esc(o.exams.join(', '))}</span></div><div class="row"><span class="lbl">Priorité</span><span>${o.urgent?chip('Urgente','er'):'Normale'}</span></div><h3 class="mt">Images (${o.images})</h3><div class="imgs">${o.images?imgThumbs(c.k,o.images,!(o.pid==1&&o.exams[0]=='Radiographie thorax')):'<div class="small">Aucune image jointe.</div>'}</div><div class="mt" style="display:flex;gap:6px"><button class="btn sm ghost" onclick="DB.orders.find(x=>x.id==${o.id}).images++;render()">+ Joindre une image</button>${o.images?`<button class="btn sm red" onclick="DB.orders.find(x=>x.id==${o.id}).images--;render()">Retirer</button>`:''}</div></div>
+ <div class="card"><h3>Compte rendu</h3><textarea id="rep" style="min-height:210px" placeholder="Rédigez le compte rendu…">${esc(o.report)}</textarea><div class="mt" style="display:flex;gap:8px;justify-content:flex-end"><button class="btn ghost" onclick="tpl(${o.id})">Insérer un modèle</button><button class="btn" onclick="imgSend(${o.id})">Signer et envoyer au médecin</button></div></div></div>`}
+function tpl(id){const o=DB.orders.find(x=>x.id==id);$('#rep').value=(o.pid==1&&o.exams[0]=='Radiographie thorax')?KARIM_RX:IMGCAT[o.exams[0]].t;if(!o.images){o.images=2;o.report=$('#rep').value;render();return}}
+function imgSend(id){const o=DB.orders.find(x=>x.id==id);const t=$('#rep').value.trim();if(!t){toast('Rédigez le compte rendu');return}if(!o.images){toast('Joignez au moins une image');return}o.report=t;o.status='Terminée';o.seen=false;log('imaging','doctor','Compte rendu disponible : '+o.who);U.imgEd=null;toast('Compte rendu et images envoyés');render()}
+function oHist(type){const l=ordersFor(type).filter(o=>o.status=='Terminée').sort((a,b)=>b.date.localeCompare(a.date));return `<div class="ph"><h2>${type=='lab'?'Résultats envoyés':'Comptes rendus envoyés'}</h2></div><div class="card"><table><tr><th>Date</th><th>Patient</th><th>Examens</th><th>Envoyé à</th><th></th></tr>${l.map(o=>`<tr><td>${dlong(o.date)}</td><td><b>${esc(o.who)}</b></td><td>${esc(o.exams.join(', '))}</td><td>${o.from} ${o.seen?chip('Lu','ok'):chip('Non lu','se')}</td><td class="right"><button class="btn sm ghost" onclick="viewOrder(${o.id})">Voir</button></td></tr>`).join('')||'<tr><td colspan="5" class="small">Aucun envoi.</td></tr>'}</table></div>`}
+
+/* ---------- PHARMACY ---------- */
+function phDash(){const r=DB.rx.filter(x=>x.status!='Brouillon');const a=r.filter(x=>x.status=='Reçue'),p=r.filter(x=>x.status=='Prête'),d=r.filter(x=>x.status=='Délivrée');const low=Object.entries(STOCK).filter(e=>e[1]<=5);
+ return kpis([[a.length,'À préparer'],[p.length,'Prêtes (en attente du patient)'],[d.length,'Délivrées'],[low.length,'Alertes de stock']])+`<div class="grid g21 mt"><div class="col">${todo(a.map(x=>[`Nouvelle ordonnance : <b>${esc(x.who)}</b> · ${x.items.length} médicament(s)`,'Ouvrir',`phView(${x.id})`]))}<div class="card"><h3>Alertes de stock</h3>${low.map(e=>`<div class="row"><span>${esc(e[0])}</span>${chip(e[1]?e[1]+' boîtes':'Rupture',e[1]?'se':'er')}</div>`).join('')||'<div class="small">Aucune alerte.</div>'}</div></div><div class="col"><div class="card"><h3>Répartition</h3>${[['À préparer',a.length,'w'],['Prêtes',p.length,''],['Délivrées',d.length,'']].map(x=>`<div class="row"><span style="width:90px">${x[0]}</span><div class="bar"><i class="${x[2]}" style="width:${r.length?x[1]/r.length*100:0}%"></i></div><b>${x[1]}</b></div>`).join('')}</div>${feed('pharmacy')}</div></div>`}
+function phRx(){const l=DB.rx.filter(r=>r.status!='Brouillon').sort((a,b)=>({'Reçue':0,'Prête':1,'Délivrée':2}[a.status]-{'Reçue':0,'Prête':1,'Délivrée':2}[b.status])||b.id-a.id);
+ return `<div class="ph"><h2>Ordonnances reçues</h2></div><div class="card"><table><tr><th>Date</th><th>Patient</th><th>Prescripteur</th><th>Médicaments</th><th>Statut</th><th></th></tr>${l.map(r=>`<tr><td>${dlong(r.date)}</td><td><b>${esc(r.who)}</b></td><td>Dr Haddad</td><td class="small">${esc(r.items.map(i=>i.drug).join(' · '))}</td><td>${st(r.status)}</td><td class="right"><button class="btn sm ghost" onclick="phView(${r.id})">Voir</button> ${r.status=='Reçue'?`<button class="btn sm" onclick="phSet(${r.id},'Prête')">Marquer prête</button>`:r.status=='Prête'?`<button class="btn sm gold" onclick="phSet(${r.id},'Délivrée')">Remise au patient</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6" class="small">Aucune ordonnance.</td></tr>'}</table></div>`}
+function phView(id){const r=DB.rx.find(x=>x.id==id);const b=[{l:'Fermer',c:'ghost'}];if(r.status=='Reçue')b.push({l:'Marquer prête',f:()=>phSet(id,'Prête',1)});if(r.status=='Prête')b.push({l:'Remise au patient',c:'gold',f:()=>phSet(id,'Délivrée',1)});
+ modal('Ordonnance · '+esc(r.who),`<div class="small">${dlong(r.date)} · ${esc(r.diag)}</div><table class="mt"><tr><th>Médicament</th><th>Posologie</th><th>Durée</th><th>Stock</th></tr>${r.items.map(i=>{const s=STOCK[i.drug];return `<tr><td>${esc(i.drug)}</td><td>${esc(i.dose)}</td><td>${esc(i.duree)}</td><td>${s===undefined||s>5?chip('En stock','ok'):s>0?chip('Stock faible','se'):chip('Rupture','er')}</td></tr>`}).join('')}</table><div class="mt">${st(r.status)}</div>${r.note?`<p class="small">${esc(r.note)}</p>`:''}`,b)}
+function phSet(id,s,silent){const r=DB.rx.find(x=>x.id==id);r.status=s;log('pharmacy','doctor',(s=='Prête'?'Ordonnance prête : ':'Ordonnance délivrée : ')+r.who);toast(s=='Prête'?'Ordonnance prête · médecin notifié':'Remise confirmée');if(!silent)render()}
+
+/* ---------- HOSPITAL ---------- */
+function aiTriage(r){let s=2,sv='Médecine interne';const re=[];const m=r.motif.toLowerCase();
+ if(/toux|fi[èe]vre|respir|pneumo/.test(m)){s=3;sv='Pneumologie';re.push('Symptômes respiratoires fébriles')}
+ if(/thorac|cardiaque|palpit/.test(m)){s=4;sv='Cardiologie';re.push('Douleur thoracique : écarter un syndrome coronarien aigu')}
+ if(/fracture|chute|trauma|accident/.test(m)){s=3;sv='Chirurgie';re.push('Contexte traumatique')}
+ if(/enfant|p[ée]diatr/.test(m)||r.age<15){sv='Pédiatrie'}
+ if(r.vit.spo2&&r.vit.spo2<94){s++;re.push(`SpO₂ ${r.vit.spo2} % : surveillance rapprochée`)}
+ if(r.vit.temp>=38.5)re.push(`Fièvre ${r.vit.temp} °C`);
+ const ta=parseInt(String(r.vit.ta).split('/')[0]);if(ta>=160){s++;re.push(`Tension élevée (${r.vit.ta})`)}
+ if(r.urgent=='Urgente')s++;
+ if(r.pid){const p=pat(r.pid);if(p&&/diab/i.test(p.ant)){re.push('Antécédent de diabète : risque de complications');}const o=DB.orders.filter(x=>x.pid==r.pid&&x.status=='Terminée');const ab=o.filter(x=>x.type=='lab').reduce((n,x)=>n+x.exams.filter(e=>{const f=flag(e,x.results[e]);return f&&f!='Normal'}).length,0);if(ab)re.push(`${ab} résultat(s) biologique(s) anormal(aux) transmis`);if(o.some(x=>x.type=='img'))re.push('Compte rendu d’imagerie joint')}
+ return{score:Math.min(5,s),service:sv,reasons:re}}
+function hDash(){const tot=DB.wards.reduce((a,w)=>a+w.cap,0),occ=DB.wards.reduce((a,w)=>a+w.occ,0);const inc=DB.refs.filter(r=>r.status=='À trier');
+ return kpis([[`${occ} / ${tot}`,'Lits occupés'],[Math.round(occ/tot*100)+' %','Taux d’occupation'],[inc.length,'Dossiers à trier'],[DB.refs.filter(r=>r.status=='Admis').length,'Admissions récentes']])+`<div class="grid g21 mt"><div class="col">${todo(inc.map(r=>[`Dossier à trier : <b>${esc(r.who)}</b> · ${esc(r.motif)} ${r.urgent=='Urgente'?chip('Urgent','er'):''}`,'Ouvrir le triage',`U.ref=${r.id};sc('incoming')`]))}<div class="card"><h3>Occupation par service</h3>${DB.wards.map(w=>{const p=Math.round(w.occ/w.cap*100);return `<div class="row"><span style="width:130px">${w.n}</span><div class="bar"><i class="${p>=90?'e':p>=80?'w':''}" style="width:${p}%"></i></div><b style="width:42px;text-align:right">${p}%</b></div>`}).join('')}</div></div><div class="col">${feed('hospital')}</div></div>`}
+function hIncoming(){const l=DB.refs.slice().sort((a,b)=>(a.status=='À trier'?0:1)-(b.status=='À trier'?0:1)||b.id-a.id);if(!U.ref||!DB.refs.find(r=>r.id==U.ref))U.ref=l[0]?.id;const r=DB.refs.find(x=>x.id==U.ref);let det='';
+ if(r){const a=aiTriage(r);det=`<div class="col"><div class="card"><h3>Dossier ${st(r.status)}</h3><div style="font-size:18px;font-weight:bold">${esc(r.who)}, ${r.age} ans</div><div class="small">Adressé par ${esc(r.from)} · ${dlong(r.date)}</div><div class="row mt"><span class="lbl">Motif</span><span>${esc(r.motif)}</span></div><div class="row"><span class="lbl">Constantes</span><span>T° ${r.vit.temp} · SpO₂ ${r.vit.spo2} % · TA ${esc(r.vit.ta)}</span></div><div class="row"><span class="lbl">Urgence</span>${st(r.urgent)}</div>${r.service?`<div class="row"><span class="lbl">Service</span><b>${esc(r.service)}</b></div>`:''}</div>
+ <div class="card ai"><h3>Assistant IA · aide au triage ${chip('suggestion','ai')}</h3><div style="font-size:16px"><b>Orientation suggérée : ${a.service}</b></div><div class="mt">Priorité : ${chip(a.score+' / 5','se')}</div><ul style="padding-left:18px;margin:10px 0">${a.reasons.map(x=>`<li>${esc(x)}</li>`).join('')||'<li>Pas d’élément de gravité identifié</li>'}</ul><div class="small">La décision reste celle du médecin : l’IA propose, ne décide pas.</div>
+ ${r.status=='À trier'?`<div class="mt" style="display:flex;gap:8px"><button class="btn" onclick="admitM(${r.id})">Valider l’admission</button><button class="btn ghost" onclick="redirM(${r.id})">Orienter ailleurs</button></div>`:''}</div></div>`}
+ return `<div class="ph"><h2>Dossiers entrants</h2></div><div class="grid g31"><div class="card"><h3>File d’arrivée</h3><div class="pl">${l.map(x=>`<div class="pi ${x.id==U.ref?'on':''}" onclick="U.ref=${x.id};render()"><div style="flex:1"><b>${esc(x.who)}</b><div class="small">${esc(x.motif)}</div></div>${st(x.status)}</div>`).join('')}</div></div>${det}</div>`}
+function admitM(id){const r=DB.refs.find(x=>x.id==id),a=aiTriage(r);modal('Valider l’admission',`<div class="small">Patient : <b>${esc(r.who)}</b></div><div class="fg mt">${sel('sv','Service d’admission',DB.wards.map(w=>[w.n,`${w.n} (${w.cap-w.occ} lits libres)`]),a.service,'full')}</div>`,[{l:'Annuler',c:'ghost'},{l:'Valider',f:()=>{const w=DB.wards.find(x=>x.n==g('sv'));if(w.occ>=w.cap){toast('Service complet');return false}w.occ++;r.status='Admis';r.service=w.n;if(r.from=='Dr Haddad')log('hospital','doctor',`Patient admis : ${r.who} (${w.n})`);toast('Admission validée · '+w.n)}}])}
+function redirM(id){const r=DB.refs.find(x=>x.id==id);modal('Orienter ailleurs',`<div class="fg">${ta('why','Motif / établissement proposé','Service saturé. Orientation vers un établissement voisin.','full')}</div>`,[{l:'Annuler',c:'ghost'},{l:'Confirmer',f:()=>{r.status='Orienté ailleurs';if(r.from=='Dr Haddad')log('hospital','doctor','Patient réorienté : '+r.who);toast('Patient réorienté')}}])}
+function hBeds(){return `<div class="ph"><h2>Lits et services</h2></div><div class="grid g2">${DB.wards.map(w=>{const p=Math.round(w.occ/w.cap*100);return `<div class="card"><h3>${w.n} ${chip(p+' %',p>=90?'er':p>=80?'se':'ok')}</h3><div class="small">${w.occ} occupés · ${w.cap-w.occ} libres sur ${w.cap}</div><div class="beds">${[...Array(w.cap)].map((_,i)=>`<i class="${i<w.occ?'o':'f'}"></i>`).join('')}</div></div>`}).join('')}</div>`}
+
+/* ---------- rendu ---------- */
+const V={
+ doctor:{dash:dDash,agenda:()=>calendar('doctor'),patients:dPatients,exams:dExams,rx:dRx},
+ lab:{dash:()=>oDash('lab'),agenda:()=>calendar('lab'),orders:()=>U.labEd?labEditor():oList('lab'),hist:()=>oHist('lab')},
+ imaging:{dash:()=>oDash('img'),agenda:()=>calendar('imaging'),orders:()=>U.imgEd?imgEditor():oList('img'),hist:()=>oHist('img')},
+ pharmacy:{dash:phDash,rx:phRx},
+ hospital:{dash:hDash,incoming:hIncoming,beds:hBeds}};
+function badge(p){return {doctor:DB.orders.filter(o=>o.status=='Terminée'&&!o.seen).length,lab:DB.orders.filter(o=>o.type=='lab'&&o.status=='Reçue').length,imaging:DB.orders.filter(o=>o.type=='img'&&o.status=='Reçue').length,pharmacy:DB.rx.filter(r=>r.status=='Reçue').length,hospital:DB.refs.filter(r=>r.status=='À trier').length}[p]}
+function render(){const p=P[U.p],y=document.documentElement.scrollTop;const sy=$('#content')?$('#content').scrollTop:0;
+ $('#app').style.setProperty('--pc',p.c);
+ $('#plat').innerHTML=Object.keys(P).map(k=>{const b=badge(k);return `<button class="${U.p==k?'on':''}" onclick="go('${k}')"><span class="ic" style="background:${P[k].c}">${P[k].i}</span>${P[k].n.replace('SIGHA ','')}${b?`<span class="bdg">${b}</span>`:''}</button>`}).join('');
+ $('#secl').textContent=p.n;
+ $('#sec').innerHTML=SECS[U.p].map(s=>`<button class="${U.sec[U.p]==s[0]?'on':''}" onclick="sc('${s[0]}')">${ic(s[2])}${s[1]}</button>`).join('');
  $('#ttl').textContent=p.n;$('#org').textContent=p.org;$('#unm').textContent=p.u;$('#uav').textContent=p.a;
- const c=step();
- $('#steps').innerHTML=STEPS.map((s,i)=>`<div class="st ${i<c?'done':i==c?'cur':''}" onclick="go('${s[1]}')">${s[0]}</div>`).join('');
- $('#content').innerHTML=V[S.v]();
-}
+ const n=DB.log.filter(x=>x.to==U.p&&!x.read).length;$('#bell').innerHTML=ic('bell')+(n?`<b>${n}</b>`:'');
+ $('#content').innerHTML=V[U.p][U.sec[U.p]]();$('#content').scrollTop=sy}
+function resetDemo(){seed();U.rxd=U.labEd=U.imgEd=null;U.pid=1;U.ref=null;render();toast('Démo réinitialisée')}
+function guide(){modal('Parcours conseillé',`<ol style="line-height:1.7;padding-left:18px"><li><b>Doctor › Patients</b> : ouvrez le dossier de Karim Bensalem, ajoutez ou modifiez un patient.</li><li><b>Doctor › Agenda</b> : cliquez sur un créneau vide pour créer un rendez-vous, cliquez sur un rendez-vous pour le modifier ou le supprimer.</li><li><b>Doctor › Examens</b> : « Nouvelle demande » vers le laboratoire et l’imagerie.</li><li><b>Lab</b> puis <b>Imaging</b> : ouvrez la demande, saisissez ou importez les résultats, envoyez.</li><li><b>Doctor › Examens</b> : consultez les résultats reçus.</li><li><b>Doctor › Ordonnances</b> : rédigez l’ordonnance et envoyez-la à la pharmacie.</li><li><b>Pharmacy</b> : marquez l’ordonnance prête, puis remise au patient.</li><li><b>Doctor › Patients › Adresser à l’hôpital</b>, puis <b>Hospital › Dossiers entrants</b> : triage assisté par l’IA et admission.</li></ol>`,[{l:'Fermer',c:'ghost'}],true)}
 render();
 </script></body></html>
