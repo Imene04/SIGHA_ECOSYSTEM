@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIGHA Ecosystem Prototype</title>
+<style>
+:root{--b:#125B89;--bd:#0c3f61;--bl:#e6f0f7;--g:#C79720;--gl:#fbf3de;--bg:#f2f6fa;--t:#1d2b3a;--m:#6b7c8d;--ok:#1f9d6b;--okl:#e3f5ee;--wa:#d98200;--wal:#fff1d6;--er:#d64545;--erl:#fde8e8;--ln:#dbe4ec}
+*{box-sizing:border-box}
+body{margin:0;font-family:Calibri,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--t);font-size:14px}
+.app{display:grid;grid-template-columns:210px 1fr;height:100vh;min-height:640px}
+.side{background:var(--bd);color:#fff;display:flex;flex-direction:column;padding:16px 12px}
+.logo{font-family:"Times New Roman",serif;font-size:22px;color:var(--g);letter-spacing:1px;font-weight:bold;padding:0 6px}
+.logo small{display:block;font:11px Calibri,sans-serif;color:#b9cfe0;letter-spacing:.5px;margin-top:2px}
+.nav{margin-top:22px;display:flex;flex-direction:column;gap:6px}
+.nav button{display:flex;align-items:center;gap:10px;background:transparent;border:0;color:#d5e4f0;padding:9px 8px;border-radius:8px;cursor:pointer;font-size:14px;text-align:left;font-family:inherit}
+.nav button:hover{background:rgba(255,255,255,.08)}
+.nav button.on{background:var(--b);color:#fff;box-shadow:inset 3px 0 0 var(--g)}
+.ic{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-weight:bold;font-size:13px;color:#fff;flex:none}
+.bdg{margin-left:auto;background:var(--g);color:#fff;border-radius:10px;font-size:11px;padding:1px 7px;font-weight:bold}
+.sfoot{margin-top:auto;font-size:11px;color:#8fb0c9;padding:6px}
+.main{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.top{background:#fff;border-bottom:1px solid var(--ln);padding:10px 20px;display:flex;align-items:center;gap:14px}
+.top h1{margin:0;font-size:18px;color:var(--bd)}
+.top .org{color:var(--m);font-size:12px}
+.user{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px}
+.av{width:30px;height:30px;border-radius:50%;background:var(--b);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:bold}
+.steps{display:flex;gap:6px;padding:8px 20px;background:#fff;border-bottom:1px solid var(--ln);overflow:hidden}
+.st{flex:1;font-size:11px;padding:5px 8px;border-radius:6px;background:var(--bg);color:var(--m);cursor:pointer;border:1px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st.done{background:var(--okl);color:var(--ok)}
+.st.cur{background:var(--gl);color:#8a6410;border-color:var(--g);font-weight:bold}
+.content{padding:16px 20px;overflow:auto;flex:1}
+.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid var(--ln)}
+.tab{padding:7px 14px;border:0;background:none;cursor:pointer;color:var(--m);font-size:13px;border-bottom:3px solid transparent;font-family:inherit}
+.tab.on{color:var(--b);border-bottom-color:var(--g);font-weight:bold}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:260px 1fr 1fr}.g2{grid-template-columns:1fr 1fr}.g21{grid-template-columns:1.4fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--ln);border-radius:10px;padding:12px 14px}
+.card h3{margin:0 0 8px;font-size:13px;color:var(--bd);text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:8px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:bold;text-transform:none;letter-spacing:0}
+.c-dr{background:var(--bg);color:var(--m)}.c-se{background:var(--wal);color:var(--wa)}.c-ok{background:var(--okl);color:var(--ok)}.c-er{background:var(--erl);color:var(--er)}.c-bl{background:var(--bl);color:var(--b)}
+.btn{background:var(--b);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:bold;font-size:13px;font-family:inherit}
+.btn:hover{background:var(--bd)}.btn.gold{background:var(--g)}.btn.gold:hover{background:#a87c15}
+.btn.ghost{background:#fff;color:var(--b);border:1px solid var(--b)}
+.btn:disabled{background:#c5d0da;cursor:not-allowed}
+.row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--ln);gap:8px}
+.row:last-child{border:0}
+.lbl{color:var(--m);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:var(--m);font-size:11px;text-transform:uppercase;padding:5px 6px;border-bottom:1px solid var(--ln)}
+td{padding:6px;border-bottom:1px solid #eef2f6}
+.H{color:var(--er);font-weight:bold}.N{color:var(--ok)}
+input[type=text]{border:1px solid var(--ln);border-radius:6px;padding:4px 6px;width:70px;font-family:inherit}
+textarea{width:100%;border:1px solid var(--ln);border-radius:8px;padding:8px;font-family:inherit;font-size:13px;min-height:130px}
+.kpi{text-align:left}.kpi b{font-size:26px;color:var(--b);display:block}.kpi span{font-size:12px;color:var(--m)}
+.bar{height:9px;background:#e6edf3;border-radius:5px;overflow:hidden;flex:1}.bar i{display:block;height:100%;background:var(--b)}.bar i.w{background:var(--wa)}.bar i.e{background:var(--er)}
+.imgs{display:flex;gap:8px}
+.im{width:110px;height:84px;border-radius:6px;position:relative;overflow:hidden;border:1px solid #333}
+.im em{position:absolute;left:4px;bottom:3px;color:#cfd8e0;font-size:9px;font-style:normal}
+.xr{background:radial-gradient(ellipse 20% 36% at 33% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 20% 36% at 67% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 10% 14% at 70% 64%,rgba(235,240,245,.85),transparent),radial-gradient(ellipse 5% 62% at 50% 48%,#cfd4da,transparent),radial-gradient(ellipse 45% 14% at 50% 12%,#aeb4bb,transparent),#101419}
+.xr.b{background:radial-gradient(ellipse 20% 36% at 33% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 20% 36% at 67% 48%,#20252b 0,#454b53 65%,transparent 100%),radial-gradient(ellipse 10% 14% at 69% 66%,rgba(235,240,245,.9),transparent),radial-gradient(ellipse 5% 62% at 50% 48%,#cfd4da,transparent),#101419;filter:contrast(1.15)}
+.us{background:conic-gradient(from 150deg at 50% 0%,#0a0d10 0deg,#59626b 30deg,#232a30 60deg,#6c767f 90deg,#1c2227 120deg,#0a0d10 60deg),#0a0d10}
+.ai{background:linear-gradient(135deg,#f3ecfb,#e6f0f7);border:1px solid #c9b8e8}
+.ai h3{color:#5b3a9a}
+.ptab{border:1px solid var(--ln);border-radius:8px;padding:8px 10px;margin-bottom:8px;display:flex;gap:10px;align-items:center;cursor:pointer;background:#fff}
+.ptab.on{border-color:var(--g);background:var(--gl)}
+.toast{position:fixed;right:18px;bottom:18px;background:var(--bd);color:#fff;padding:10px 16px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:13px;opacity:0;transition:.3s;pointer-events:none}
+.toast.show{opacity:1}
+.small{font-size:12px;color:var(--m)}
+.mt{margin-top:12px}
+</style></head><body>
+<div class="app">
+ <aside class="side">
+  <div class="logo">SIGHA<small>Ecosystem · Démo interactive</small></div>
+  <div class="nav" id="nav"></div>
+  <div class="sfoot">Données fictives.<br>Maquette de démonstration.</div>
+ </aside>
+ <section class="main">
+  <div class="top"><div><h1 id="ttl"></h1><div class="org" id="org"></div></div><div class="user"><div class="av" id="uav"></div><div id="unm"></div></div></div>
+  <div class="steps" id="steps"></div>
+  <div class="content" id="content"></div>
+ </section>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const P={
+ doctor:{n:'SIGHA Doctor',c:'#125B89',i:'D',org:'Cabinet médical · Constantine',u:'Dr Meriem Haddad',a:'MH'},
+ lab:{n:'SIGHA Lab',c:'#1f9d6b',i:'L',org:'Laboratoire El Amel · Constantine',u:'Nabil Cherif, biologiste',a:'NC'},
+ imaging:{n:'SIGHA Imaging',c:'#7a4fc2',i:'I',org:"Centre d'imagerie Ibn Sina · Constantine",u:'Dr Samir Ouali, radiologue',a:'SO'},
+ pharmacy:{n:'SIGHA Pharmacy',c:'#d98200',i:'P',org:'Pharmacie Benyahia · Constantine',u:'Lamia Benyahia, pharmacienne',a:'LB'},
+ hospital:{n:'SIGHA Hospital',c:'#c0392b',i:'H',org:'Centre Hospitalier Les Jasmins · Constantine',u:'Dr Yacine Mebarki, urgences',a:'YM'}
+};
+const S={v:'doctor',tab:{doctor:'consult',lab:'inbox',imaging:'inbox',pharmacy:'inbox',hospital:'dash'},
+ labSent:0,labFilled:0,labDone:0,imgSent:0,imgAtt:0,imgDone:0,rxSent:0,rxDone:0,ref:0,adm:0};
+const LAB=[['Glycémie à jeun','1,86','g/L','0,70 – 1,10',1],['HbA1c','8,1','%','< 6,5',1],['CRP','48','mg/L','< 5',1],['Globules blancs','13,4','10³/µL','4,0 – 10,0',1],['Hémoglobine','13,2','g/dL','13,0 – 17,0',0]];
+const REP="Radiographie thoracique de face : foyer de condensation alvéolaire du lobe inférieur droit avec bronchogramme aérien. Pas d'épanchement pleural. Silhouette cardiaque de taille normale.\nConclusion : aspect compatible avec une pneumopathie franche lobaire inférieure droite.";
+const $=s=>document.querySelector(s);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function chip(t,c){return `<span class="chip c-${c}">${t}</span>`}
+function step(){ if(!S.labSent&&!S.imgSent)return 0; if(!S.labDone||!S.imgDone)return S.labDone?2:1; if(!S.rxSent)return 3; if(!S.rxDone)return 4; return 5}
+const STEPS=[['1 · Médecin : demandes','doctor'],['2 · Labo : résultats','lab'],['3 · Imagerie : rapport','imaging'],['4 · Médecin : ordonnance','doctor'],['5 · Pharmacie : délivrance','pharmacy'],['6 · Hôpital : triage IA','hospital']];
+function badges(){return {doctor:(S.labDone&&S.imgDone&&!S.rxSent)?1:0,lab:(S.labSent&&!S.labDone)?1:0,imaging:(S.imgSent&&!S.imgDone)?1:0,pharmacy:(S.rxSent&&!S.rxDone)?1:0,hospital:(S.ref&&!S.adm)?1:0}}
+function go(v,t){S.v=v;if(t)S.tab[v]=t;render()}
+function tabs(list){return `<div class="tabs">${list.map(([k,l])=>`<button class="tab ${S.tab[S.v]==k?'on':''}" onclick="go('${S.v}','${k}')">${l}</button>`).join('')}</div>`}
+function xr(cls,l){return `<div class="im ${cls}"><em>${l}</em></div>`}
+
+function doctor(){
+ const t=S.tab.doctor;
+ if(t=='agenda') return tabs([['agenda','Agenda'],['consult','Consultation']])+`<div class="card"><h3>Agenda du jeudi</h3><table><tr><th>Heure</th><th>Patient</th><th>Motif</th><th></th></tr>
+ <tr><td>09:00</td><td>Amina Rahmani, 34 ans</td><td>Suivi grossesse</td><td>${chip('Terminé','ok')}</td></tr>
+ <tr><td>09:30</td><td><b>Karim Bensalem, 52 ans</b></td><td>Toux persistante, fatigue</td><td><button class="btn" onclick="go('doctor','consult')">Ouvrir le dossier</button></td></tr>
+ <tr><td>10:00</td><td>Walid Merabet, 8 ans</td><td>Certificat sportif</td><td>${chip('En attente','dr')}</td></tr></table></div>`;
+ const lab=S.labDone?chip('Résultats reçus','ok'):S.labSent?chip('Envoyée · en cours','se'):chip('Brouillon','dr');
+ const img=S.imgDone?chip('Rapport reçu','ok'):S.imgSent?chip('Envoyée · en cours','se'):chip('Brouillon','dr');
+ const both=S.labDone&&S.imgDone;
+ return tabs([['agenda','Agenda'],['consult','Consultation']])+`<div class="grid g3">
+ <div class="card"><h3>Patient</h3><div style="font-size:16px;font-weight:bold">Karim Bensalem</div><div class="small">52 ans · Dossier SIGHA #2027-48215</div>
+  <div class="row"><span class="lbl">Antécédents</span><span>Diabète type 2, HTA</span></div>
+  <div class="row"><span class="lbl">Allergies</span><span>Aucune connue</span></div>
+  <div class="row"><span class="lbl">Motif</span><span>Toux 3 semaines, fièvre</span></div>
+  <div class="row"><span class="lbl">Constantes</span><span>T° 38,6 · SpO₂ 93 %</span></div>
+  <div style="margin-top:10px"><button class="btn ghost" ${both&&!S.ref?'':'disabled'} onclick="S.ref=1;toast('Dossier transmis à SIGHA Hospital');render()">${S.ref?'Adressé à l’hôpital ✓':'Adresser à l’hôpital'}</button></div></div>
+ <div>
+  <div class="card"><h3>Analyses biologiques ${lab}</h3><div class="small">Vers : Laboratoire El Amel</div>
+   <div class="row"><span>NFS · Glycémie · HbA1c · CRP</span></div>
+   <div class="mt"><button class="btn" ${S.labSent?'disabled':''} onclick="S.labSent=1;toast('Demande envoyée au laboratoire');render()">Envoyer au laboratoire</button></div></div>
+  <div class="card mt"><h3>Imagerie ${img}</h3><div class="small">Vers : Centre d'imagerie Ibn Sina</div>
+   <div class="row"><span>Radiographie thorax face</span></div>
+   <div class="mt"><button class="btn" ${S.imgSent?'disabled':''} onclick="S.imgSent=1;toast('Demande envoyée au centre d’imagerie');render()">Envoyer à l'imagerie</button></div></div>
+ </div>
+ <div>
+  <div class="card"><h3>Résultats reçus</h3>${(S.labDone||S.imgDone)?(S.labDone?`<table>${LAB.map(r=>`<tr><td>${r[0]}</td><td class="${r[4]?'H':'N'}">${r[1]} ${r[2]}</td></tr>`).join('')}</table>`:'')+(S.imgDone?`<div class="imgs mt">${xr('xr','Rx thorax')}${xr('xr b','Rx profil')}</div><div class="small mt">${REP.split('\n')[1]}</div>`:''):'<div class="small">En attente des résultats…</div>'}</div>
+  <div class="card mt"><h3>Ordonnance ${S.rxDone?chip('Délivrée','ok'):S.rxSent?chip('Envoyée','se'):''}</h3>
+   <div class="row"><span>Amoxicilline/Ac. clav. 1 g</span><span class="small">1 cp ×2/j · 7 j</span></div>
+   <div class="row"><span>Paracétamol 1 g</span><span class="small">si fièvre</span></div>
+   <div class="row"><span>Metformine 850 mg</span><span class="small">1 cp ×2/j</span></div>
+   <div class="mt"><button class="btn gold" ${both&&!S.rxSent?'':'disabled'} onclick="S.rxSent=1;toast('Ordonnance envoyée à la pharmacie');render()">Envoyer à la pharmacie</button></div></div>
+ </div></div>`;
+}
+function lab(){
+ const t=S.tab.lab;
+ if(t=='stock') return tabs([['inbox','Demandes reçues'],['stock','Archives']])+`<div class="card"><h3>Analyses terminées aujourd'hui</h3><table><tr><th>Patient</th><th>Examen</th><th>Statut</th></tr><tr><td>Amina Rahmani</td><td>Sérologie, NFS</td><td>${chip('Envoyé','ok')}</td></tr><tr><td>Hocine Zerrouki</td><td>Bilan lipidique</td><td>${chip('Envoyé','ok')}</td></tr></table></div>`;
+ const rows=`<tr><td>Salima Boudjemaa</td><td>Dr Khelifi</td><td>TSH</td><td>${chip('Terminé','ok')}</td></tr>`;
+ return tabs([['inbox','Demandes reçues'],['stock','Archives']])+`<div class="grid g21"><div class="card"><h3>Demandes reçues ${S.labSent&&!S.labDone?chip('1 nouvelle','se'):''}</h3><table><tr><th>Patient</th><th>Médecin</th><th>Examen</th><th>Statut</th></tr>
+ ${S.labSent?`<tr style="background:var(--gl)"><td><b>Karim Bensalem</b></td><td>Dr Haddad</td><td>NFS, glycémie, HbA1c, CRP</td><td>${S.labDone?chip('Envoyé','ok'):chip('À traiter','se')}</td></tr>`:''}${rows}</table>
+ ${!S.labSent?'<div class="small mt">Aucune nouvelle demande. Le médecin doit d’abord envoyer sa demande.</div>':''}</div>
+ <div class="card"><h3>Saisie des résultats</h3>${!S.labSent?'<div class="small">Sélectionnez une demande.</div>':`<div class="small">Karim Bensalem · prélèvement 09:45</div>
+ <table><tr><th>Analyse</th><th>Valeur</th><th>Réf.</th></tr>${LAB.map(r=>`<tr><td>${r[0]}</td><td class="${S.labFilled?(r[4]?'H':'N'):''}">${S.labFilled?r[1]+' '+r[2]:'—'}</td><td class="small">${r[3]}</td></tr>`).join('')}</table>
+ <div class="mt" style="display:flex;gap:8px"><button class="btn ghost" ${S.labFilled?'disabled':''} onclick="S.labFilled=1;toast('Résultats importés depuis l’automate');render()">Importer depuis l'automate</button><button class="btn" ${S.labFilled&&!S.labDone?'':'disabled'} onclick="S.labDone=1;toast('Résultats envoyés au Dr Haddad');render()">Valider et envoyer</button></div>`}</div></div>`;
+}
+function imaging(){
+ const t=S.tab.imaging;
+ return tabs([['inbox','Liste de travail'],['arch','Archives']])+`<div class="grid g21"><div class="card"><h3>Liste de travail ${S.imgSent&&!S.imgDone?chip('1 nouvelle','se'):''}</h3><table><tr><th>Patient</th><th>Prescripteur</th><th>Examen</th><th>Statut</th></tr>
+ ${S.imgSent?`<tr style="background:var(--gl)"><td><b>Karim Bensalem</b></td><td>Dr Haddad</td><td>Rx thorax face</td><td>${S.imgDone?chip('Rapport envoyé','ok'):chip('À interpréter','se')}</td></tr>`:''}
+ <tr><td>Rachid Amrane</td><td>Dr Khelifi</td><td>Écho abdominale</td><td>${chip('Rapport envoyé','ok')}</td></tr></table>
+ ${!S.imgSent?'<div class="small mt">Aucune nouvelle demande pour le moment.</div>':''}
+ <h3 class="mt">Images</h3><div class="imgs">${S.imgAtt?xr('xr','Rx thorax face')+xr('xr b','Rx profil')+xr('us','Écho'):'<div class="small">Aucune image jointe.</div>'}</div></div>
+ <div class="card"><h3>Compte rendu</h3>${!S.imgSent?'<div class="small">Sélectionnez une demande.</div>':`<textarea id="rep" ${S.imgDone?'disabled':''}>${REP}</textarea>
+ <div class="mt" style="display:flex;gap:8px"><button class="btn ghost" ${S.imgAtt?'disabled':''} onclick="S.imgAtt=1;toast('Images DICOM jointes');render()">Joindre les images</button><button class="btn" ${S.imgAtt&&!S.imgDone?'':'disabled'} onclick="S.imgDone=1;toast('Rapport + images envoyés au Dr Haddad');render()">Signer et envoyer</button></div>`}</div></div>`;
+}
+function pharmacy(){
+ const stock=[['Amoxicilline/Ac. clav. 1 g',42,'ok'],['Paracétamol 1 g',210,'ok'],['Metformine 850 mg',3,'wa'],['Insuline glargine',0,'er']];
+ return tabs([['inbox','Ordonnances reçues']])+`<div class="grid g21"><div class="card"><h3>Ordonnances reçues ${S.rxSent&&!S.rxDone?chip('1 nouvelle','se'):''}</h3>
+ ${S.rxSent?`<div style="background:var(--gl);border-radius:8px;padding:10px"><b>Karim Bensalem</b> · prescrite par Dr Haddad ${S.rxDone?chip('Délivrée','ok'):chip('À préparer','se')}
+ <table class="mt"><tr><th>Médicament</th><th>Posologie</th><th>Stock</th></tr><tr><td>Amoxicilline/Ac. clav. 1 g</td><td>1 cp ×2/j · 7 j</td><td>${chip('En stock','ok')}</td></tr><tr><td>Paracétamol 1 g</td><td>si fièvre</td><td>${chip('En stock','ok')}</td></tr><tr><td>Metformine 850 mg</td><td>1 cp ×2/j</td><td>${chip('Stock faible','se')}</td></tr></table>
+ <div class="mt"><button class="btn gold" ${S.rxDone?'disabled':''} onclick="S.rxDone=1;toast('Délivrance confirmée · médecin notifié');render()">${S.rxDone?'Délivrée ✓':'Confirmer la délivrance'}</button></div></div>`:'<div class="small">Aucune ordonnance en attente.</div>'}
+ <div class="row mt"><span>Salim Hadjadj · Dr Khelifi</span>${chip('Délivrée','ok')}</div></div>
+ <div class="card"><h3>Stock</h3>${stock.map(s=>`<div class="row"><span>${s[0]}</span>${chip(s[1]?s[1]+' boîtes':'Rupture',s[2])}</div>`).join('')}</div></div>`;
+}
+function hospital(){
+ const t=S.tab.hospital;
+ const wards=[['Urgences',78,''],['Pneumologie',92,'w'],['Cardiologie',70,''],['Chirurgie',96,'e'],['Pédiatrie',55,'']];
+ const dash=`<div class="grid g4"><div class="card kpi"><b>182 / 240</b><span>Lits occupés</span></div><div class="card kpi"><b>14</b><span>Patients en attente aux urgences</span></div><div class="card kpi"><b>37</b><span>Admissions du jour</span></div><div class="card kpi"><b>${S.ref?3:2}</b><span>Dossiers entrants (transferts)</span></div></div>
+ <div class="grid g2 mt"><div class="card"><h3>Occupation par service</h3>${wards.map(w=>`<div class="row"><span style="width:110px">${w[0]}</span><div class="bar"><i class="${w[2]}" style="width:${w[1]}%"></i></div><b style="width:40px;text-align:right">${w[1]}%</b></div>`).join('')}</div>
+ <div class="card"><h3>Dossiers entrants</h3><div class="row"><span>Nadia Slimani · Dr Khelifi</span>${chip('Admise','ok')}</div><div class="row"><span>Omar Teffahi · SAMU</span>${chip('Aux urgences','se')}</div>
+ ${S.ref?`<div class="row" style="background:var(--gl)"><span><b>Karim Bensalem</b> · Dr Haddad</span>${S.adm?chip('Admis · Pneumologie','ok'):chip('À trier','se')}</div>`:''}</div></div>`;
+ const ai=`<div class="grid g2"><div class="card"><h3>Dossier entrant</h3>${!S.ref?'<div class="small">Aucun dossier à trier. Le médecin doit adresser le patient depuis SIGHA Doctor.</div>':`<div style="font-size:16px;font-weight:bold">Karim Bensalem, 52 ans</div><div class="small">Adressé par Dr Haddad · dossier complet transmis</div>
+ <div class="row"><span class="lbl">Constantes</span><span>T° 38,6 · SpO₂ 93 %</span></div><div class="row"><span class="lbl">Biologie</span><span class="H">CRP 48 · GB 13,4 · HbA1c 8,1</span></div><div class="row"><span class="lbl">Imagerie</span><span>Condensation lobaire inf. droite</span></div><div class="row"><span class="lbl">Ordonnance</span><span>Amoxicilline/Ac. clav.</span></div>`}</div>
+ <div class="card ai"><h3>Assistant IA · aide au triage</h3>${!S.ref?'<div class="small">En attente d’un dossier.</div>':`<div style="font-size:15px"><b>Pneumopathie communautaire probable</b></div><div class="mt">Priorité : ${chip('3 / 5 · modérée','se')}</div>
+ <ul style="padding-left:18px;margin:10px 0"><li>SpO₂ 93 % + diabète : surveillance rapprochée</li><li>Service suggéré : <b>Pneumologie</b> (6 lits libres)</li><li>Pas de signe de gravité immédiat (CURB-65 = 1)</li></ul>
+ <div class="small">Suggestion à valider par le médecin. L'IA ne décide pas.</div>
+ <div class="mt"><button class="btn" ${S.adm?'disabled':''} onclick="S.adm=1;toast('Admission validée · Pneumologie');render()">${S.adm?'Admission validée ✓':'Valider l’admission'}</button></div>`}</div></div>`;
+ return tabs([['dash','Tableau de bord'],['ai','Triage IA']])+(t=='dash'?dash:ai);
+}
+const V={doctor,lab,imaging,pharmacy,hospital};
+function render(){
+ const p=P[S.v],b=badges();
+ $('#nav').innerHTML=Object.keys(P).map(k=>`<button class="${S.v==k?'on':''}" onclick="go('${k}')"><span class="ic" style="background:${P[k].c}">${P[k].i}</span>${P[k].n.replace('SIGHA ','')}${b[k]?`<span class="bdg">${b[k]}</span>`:''}</button>`).join('');
+ $('#ttl').textContent=p.n;$('#org').textContent=p.org;$('#unm').textContent=p.u;$('#uav').textContent=p.a;
+ const c=step();
+ $('#steps').innerHTML=STEPS.map((s,i)=>`<div class="st ${i<c?'done':i==c?'cur':''}" onclick="go('${s[1]}')">${s[0]}</div>`).join('');
+ $('#content').innerHTML=V[S.v]();
+}
+render();
+</script></body></html>
